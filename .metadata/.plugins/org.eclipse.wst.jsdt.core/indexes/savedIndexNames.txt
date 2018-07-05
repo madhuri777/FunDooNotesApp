@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+/home/bridgeit/eclipse-workspace-FundoApp/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1132776740.index
+2101941495.index
+3423406420.index
+1425696823.index
+3427111200.index
+1018355223.index

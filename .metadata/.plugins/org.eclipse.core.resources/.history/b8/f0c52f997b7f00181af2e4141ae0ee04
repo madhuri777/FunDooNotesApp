@@ -1,0 +1,30 @@
+package com.bridgeit.fundoonotes.notes.model;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+
+import com.bridgeit.fundoonotes.user.model.User;
+
+public class NotesDTO {
+
+	private User userid;
+	
+	private Date createdDate;
+	
+	private Date modifiedDate;
+	
+	private String title;
+	
+	private String discription;
+	
+	private String colour="white";
+	
+	private boolean archive=false;
+	
+	private boolean trash=false;
+	
+	private boolean pin=false;
+	 
+}

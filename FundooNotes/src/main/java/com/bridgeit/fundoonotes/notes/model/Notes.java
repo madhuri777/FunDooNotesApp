@@ -19,7 +19,7 @@ public class Notes {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	@ManyToOne
 	private User userid;
@@ -48,16 +48,18 @@ public class Notes {
 	@Column
 	private boolean pin=false;
 	
+	public Notes() {
+		
+	}
 	public Notes(NotesDTO dto) {
 		this.title=dto.getTitle();
 		this.discription=dto.getDiscription();
-		this.colour=dto.getColour();
 	    this.archive=dto.isArchive();
 	    this.trash=dto.isTrash();
 	    this.pin=dto.isPin();
 	    this.createdDate=new Date();
 	    this.modifiedDate=createdDate;
-	    this.userid=dto.getUserid();
+	    this.colour=getColour();
 	}
 	
 	public boolean isPin() {
@@ -78,10 +80,10 @@ public class Notes {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public User getUserid() {

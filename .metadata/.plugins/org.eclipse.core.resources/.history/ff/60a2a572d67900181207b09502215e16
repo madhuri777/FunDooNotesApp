@@ -1,0 +1,14 @@
+package com.bridgeit.fundoonotes.model;
+
+public class RegistrationDTO {
+
+	private long userId;
+	
+	private String name;
+	
+	private String email;
+	
+	private String password;
+	
+	private long phoneNumber;
+}

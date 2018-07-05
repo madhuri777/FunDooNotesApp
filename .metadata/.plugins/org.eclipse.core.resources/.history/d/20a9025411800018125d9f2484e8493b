@@ -1,0 +1,10 @@
+package com.bridgeit.fundoonotes.notes.dao;
+
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.user.model.User;
+
+public interface INotesDAO {
+
+	long save(Notes notes);
+	List<Notes> getAllNotes(User user);
+}

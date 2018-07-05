@@ -1,0 +1,22 @@
+package com.bridgeit.fundoonotes.notes.model;
+
+import java.util.Date;
+
+public class AllNotesOfUser {
+
+private Date createdDate;
+	
+	private Date modifiedDate;
+	
+	private String title;
+	
+	private String discription;
+	
+	private String colour="white";
+	
+	private boolean archive=false;
+	
+	private boolean trash=false;
+	
+	private boolean pin=false;
+}

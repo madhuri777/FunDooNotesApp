@@ -1,0 +1,38 @@
+package com.bridgeit.fundoonotes.model;
+
+public class EmailTocken {
+
+	private String tocken;
+	
+	private String email;
+	
+	private String url;
+	
+	
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getTocken() {
+		return tocken;
+	}
+
+	public void setTocken(String tocken) {
+		this.tocken = tocken;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+}

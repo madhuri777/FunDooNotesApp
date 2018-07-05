@@ -1,0 +1,49 @@
+package com.bridgeit.fundoonotes.notes.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.notes.service.INotesService;
+
+@RestController
+public class NotesController {
+
+	@Autowired
+	private INotesService iNotesService;
+	
+	@RequestMapping(value="/createnotes", method=RequestMethod.POST)
+	public ResponseEntity<String> createNotes(HttpServletRequest request,@RequestBody NotesDTO dto){
+		
+		System.out.println("note controoler");
+		String token=request.getHeader("userid");
+		Notes note=iNotesService.createNotes(token , dto);
+		
+		if(note!=null) {
+			
+			return new ResponseEntity<String>("saved note successfully And Ur Note As follow \n"+note,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("NOT saved note successfully ",HttpStatus.CONFLICT);
+		
+	}
+	
+	@RequestMapping(value="/getallnotesofuser",method=RequestMethod.GET)
+	public ResponseEntity<String> getAllNotes(HttpServletRequest request){
+		
+		String token=request.getHeader("userid");
+		
+		boolean flag=iNotesService.getAllNotes(token);
+		System.out.println(" controller for getLakk records "+flag); 
+		
+		return new ResponseEntity<String>("u have retrive all notes ",HttpStatus.OK);
+	}
+}

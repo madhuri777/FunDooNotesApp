@@ -32,13 +32,12 @@ public class UserController {
 
 		String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "" + request.getContextPath()
 				+ "/activeuser/";
+		boolean flag=userService.register(registeruser, url);
 
-		if (userService.register(registeruser, url)) {
+		if (flag) {
 			return new ResponseEntity<User>(HttpStatus.OK);
-		} else {
-
-			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
+		return new ResponseEntity<User>(HttpStatus.CONFLICT);
 
 	}
 

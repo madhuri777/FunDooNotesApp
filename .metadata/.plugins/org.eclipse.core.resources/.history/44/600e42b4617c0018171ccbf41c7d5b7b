@@ -1,0 +1,50 @@
+package com.bridgeit.fundoonotes.dao;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Repository;
+import com.bridgeit.fundoonotes.model.User;
+
+@Repository
+public class UserDao implements IUserDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Override
+	public long register(User user) {
+		String pw_hash=BCrypt.hashpw(user.getPassword(),BCrypt.gensalt());
+		user.setPassword(pw_hash);
+		Session session = sessionFactory.openSession();
+		long userId = (Long) session.save(user);
+		return userId;
+	}
+
+	@SuppressWarnings({ "deprecation" })
+	@Override
+	public User isExist(String email) { 
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("email",email));
+		User user2= (User) criteria.uniqueResult();
+		return user2;
+	}
+
+	@Override
+	public boolean update(long userId) {
+		
+		return false;
+	}
+
+	@Override
+	public User get(long id) {
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("userId",id));
+		User user2= (User) criteria.uniqueResult();
+		return user2;
+	}
+
+	
+
+}

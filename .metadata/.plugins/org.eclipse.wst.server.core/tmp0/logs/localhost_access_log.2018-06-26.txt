@@ -1,0 +1,11 @@
+127.0.0.1 - - [26/Jun/2018:09:43:13 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:09:43:14 +0530] "GET /controller/ HTTP/1.1" 200 134
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:09:43:14 +0530] "GET /favicon.ico HTTP/1.1" 404 1084
+127.0.0.1 - - [26/Jun/2018:12:36:40 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:12:36:48 +0530] "GET /MailSending/ HTTP/1.1" 200 234
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:12:36:50 +0530] "GET /MailSending/showMessage.html;jsessionid=FC1139401D50E16920998C8049E0870F HTTP/1.1" 404 1046
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:12:51:01 +0530] "GET /MailSending/WEB-INF/classes/com/bridgeit/message/ApplicationMailer.java HTTP/1.1" 404 1046
+127.0.0.1 - - [26/Jun/2018:12:59:36 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:12:59:40 +0530] "GET /MailSending/WEB-INF/classes/com/bridgeit/message/MailTest.java HTTP/1.1" 404 1159
+127.0.0.1 - - [26/Jun/2018:13:03:03 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [26/Jun/2018:13:03:04 +0530] "GET /MailSending/ HTTP/1.1" 404 1089

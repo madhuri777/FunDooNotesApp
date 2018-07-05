@@ -1,0 +1,23 @@
+package com.bridgeit.fundoonotes.utility;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.bridgeit.fundoonotes.configuration.FundooNotesConfiguration;
+
+@Component
+public class SenderRabbitMQ {
+
+	@Autowired
+	RabbitTemplate rabbitTemplate;
+	
+	public SenderRabbitMQ(RabbitTemplate rabbitTemplate) {
+		this.rabbitTemplate=rabbitTemplate;
+		System.out.println("Sender");
+	}
+	
+	public void sendMessage() {
+		rabbitTemplate.convertAndSend(FundooNotesConfiguration.topicExchangeName,"lazy.orange.rabbit", "My first Mail");
+		}
+}

@@ -39,6 +39,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.model.EmailTocken;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.utility.MailRabbitMQ;
@@ -195,4 +196,19 @@ public class FundooNotesConfiguration {
 		redisTemplate.setEnableTransactionSupport(true);
 		return redisTemplate;
 	}
+	
+//--------------------------------------------------Notes Configuration--------------------------------------	
+
+   @Bean
+   public Notes notes() {
+	   return new Notes();
+   }
+
+   @Bean
+   public NotesDTO notesDTO() {
+	   return new NotesDTO();
+   }
+
+
+
 }

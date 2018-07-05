@@ -1,5 +1,9 @@
 package com.bridgeit.fundoonotes.notes.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +18,11 @@ import com.bridgeit.fundoonotes.user.utility.JWT;
 @Service
 public class NotesService implements INotesService {
 
-	Notes note;
+	Notes notes;
+	
+	
+	@Autowired
+	NotesDTO noteDTO;
 	
 	@Autowired
 	UserDao userDao;
@@ -24,14 +32,83 @@ public class NotesService implements INotesService {
 	
 	@Override
 	@Transactional
-	public boolean createNotes(String tocken,NotesDTO dto) {
+	public NotesDTO createNotes(String tocken,NotesDTO dto) {
 		
 		long id=JWT.parseJWT(tocken);
+		
 		User user=userDao.getUserById(id);
-		dto.setUserid(user);
+		
 		Notes note=new Notes(dto);
-		notesDAO.save(note);
-		return true;
+		note.setUserid(user);
+		
+		long noteid=notesDAO.save(note);
+		
+		note=notesDAO.getNoteById(noteid);
+		
+		noteDTO.setTitle(note.getTitle());
+		noteDTO.setDiscription(note.getDiscription());
+		noteDTO.setArchive(note.getArchive());
+		noteDTO.setPin(note.isPin());
+		noteDTO.setTrash(note.getTrash());
+	    
+		return noteDTO;
+	}
+
+	@Override
+	@Transactional
+	public List<NotesDTO> getAllNotes(String token) {
+		
+		System.out.println("sssss notes service "+token);
+		
+		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
+		long id=JWT.parseJWT(token);
+		
+		User user=userDao.getUserById(id);
+		
+		System.out.println("qqqq "+user);
+		
+		List<Notes> listNote=notesDAO.getAllNotes(user);
+		
+		for(Notes note : listNote){
+			
+			NotesDTO notesDTO1=new NotesDTO();
+			notesDTO1.setTitle(note.getTitle());
+			notesDTO1.setDiscription(note.getDiscription());
+			notesDTO1.setArchive(note.getArchive());
+			notesDTO1.setTrash(note.getTrash());
+			notesDTO1.setPin(note.isPin());
+			
+			liNotesDTOs.add(notesDTO1);
+			
+		}
+		System.out.println("after dao in service ");
+		
+		return  liNotesDTOs;
+	}
+
+	@Override
+	@Transactional
+	public boolean update(long id, String token,NotesDTO dto) {
+		Notes note=notesDAO.getNoteById(id);
+		System.out.println("update service "+note);
+		long userid=note.getUserid().getUserId();
+		System.out.println("user id "+userid);
+		long tokenid=JWT.parseJWT(token);
+		System.out.println("token id "+tokenid);
+		if(userid==tokenid) {
+			//Notes notes=new Notes(dto);
+			note.setTitle(dto.getTitle());
+            note.setDiscription(dto.getDiscription());
+            note.setTrash(dto.isTrash());
+            note.setColour(dto.getColour());
+            note.setArchive(dto.isArchive());
+            note.setPin(dto.isPin());
+            note.setModifiedDate(new Date());
+			notesDAO.update(note);
+			System.out.println("update success in service ");
+			return true;
+		}
+		return false;
 	}
 
 }

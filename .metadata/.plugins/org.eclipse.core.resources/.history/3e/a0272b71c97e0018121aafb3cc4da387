@@ -1,0 +1,5 @@
+package com.bridgeit.fundoonotes.notes.model;
+
+public class Notes {
+
+}

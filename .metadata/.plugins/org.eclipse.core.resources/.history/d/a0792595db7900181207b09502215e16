@@ -1,0 +1,11 @@
+package com.bridgeit.fundoonotes.service;
+
+import com.bridgeit.fundoonotes.model.RegistrationDTO;
+import com.bridgeit.fundoonotes.model.User;
+
+
+public interface IUserService {
+
+	boolean register(RegistrationDTO user);
+	boolean login(User user);
+}

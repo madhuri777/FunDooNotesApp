@@ -1,0 +1,11 @@
+package com.bridgeit.fundoonotes.dao;
+
+import com.bridgeit.fundoonotes.model.User;
+
+public interface IUserDao {
+
+	long register(User user);
+	User isExist(String user);
+	boolean update(long userId);
+	User get(long id);
+}

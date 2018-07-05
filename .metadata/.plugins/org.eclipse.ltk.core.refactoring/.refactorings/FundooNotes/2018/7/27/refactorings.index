@@ -1,0 +1,12 @@
+1530440726249	Rename method 'isVerified'
+1530445000313	Rename method 'resetPasssWord'
+1530445024681	Rename method 'forgetPassWord'
+1530445050954	Rename method 'resetPassWord'
+1530504746049	Rename resource 'ForgetPassWord.java'
+1530504768707	Rename type 'ForgetPassWord'
+1530622927805	Delete element
+1530622968241	Delete element
+1530687373500	Rename local variable 'tocken'
+1530687431738	Rename local variable 'tocken'
+1530688627808	Rename method 'get'
+1530775682929	Rename type 'AllNotesOfUser'

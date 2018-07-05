@@ -1,0 +1,13 @@
+package com.bridgeit.fundoonotes.notes.service;
+
+import java.util.List;
+
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+
+public interface INotesService {
+
+	Notes createNotes(String token,NotesDTO dto);
+	List<NotesDTO> getAllNotes(String token);
+	
+}

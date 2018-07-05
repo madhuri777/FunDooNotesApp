@@ -1,0 +1,75 @@
+package com.bridgeit.fundoonotes.notes.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bridgeit.fundoonotes.notes.dao.NotesDAO;
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.user.dao.UserDao;
+import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.utility.JWT;
+
+@Service
+public class NotesService implements INotesService {
+
+	Notes note=new Notes();
+	NotesDTO notedto;
+	@Autowired
+	UserDao userDao;
+	
+	@Autowired
+	NotesDAO notesDAO;
+	
+	@Override
+	@Transactional
+	public Notes createNotes(String tocken,NotesDTO dto) {
+		
+		long id=JWT.parseJWT(tocken);
+		
+		User user=userDao.getUserById(id);
+		
+		dto.setUserid(user);
+		
+		Notes note=new Notes(dto);
+		
+		long noteid=notesDAO.save(note);
+		
+	    note=notesDAO.getNoteById(noteid);
+		
+	    System.out.println("getnote By Id In Service  "+note.toString());
+	    
+		return note;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<NotesDTO> getAllNotes(String token) {
+		List<NotesDTO> listOfNotes=new ArrayList<NotesDTO>();
+		System.out.println("sssss notes service "+token);
+		
+		long id=JWT.parseJWT(token);
+		
+		User user=userDao.getUserById(id);
+		
+		System.out.println("qqqq "+user);
+		
+		List<Notes> listNote=notesDAO.getAllNotes(user);
+		
+		for(Notes note : listNote){
+			
+			System.out.println("note of user "+note);
+			listOfNotes.add(note);
+		    listOfNotes=(List<NotesDTO>) note;
+		}
+		System.out.println("after dao in service ");
+		
+		return  listOfNotes;
+	}
+
+}

@@ -1,0 +1,14 @@
+package com.bridgeit.fundoonotes.notes.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class NotesService implements INotesService {
+
+	@Override
+	public boolean createNotes(String tocken) {
+		
+		return false;
+	}
+
+}

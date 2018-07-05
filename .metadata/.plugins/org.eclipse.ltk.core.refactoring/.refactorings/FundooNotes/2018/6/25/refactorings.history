@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;FundooNotes/src/main/java/com/bridgeit/fundoonotes/confidguration&apos; to &apos;configuration&apos;" description="Rename resource &apos;confidguration&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/java/com/bridgeit/fundoonotes/confidguration" name="configuration" stamp="1529732093735" updateReferences="true"/>
+</session>

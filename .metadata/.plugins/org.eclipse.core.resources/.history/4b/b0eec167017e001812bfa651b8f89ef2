@@ -1,0 +1,135 @@
+package com.bridgeit.fundoonotes.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bridgeit.fundoonotes.configuration.FundooNotesConfiguration;
+import com.bridgeit.fundoonotes.dao.IUserDao;
+import com.bridgeit.fundoonotes.model.EmailTocken;
+import com.bridgeit.fundoonotes.model.LoginDTO;
+import com.bridgeit.fundoonotes.model.RegistrationDTO;
+import com.bridgeit.fundoonotes.model.User;
+import com.bridgeit.fundoonotes.utility.JWT;
+
+@Service
+public class UserService implements IUserService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
+	@Autowired
+	private IUserDao userDao;
+
+	EmailTocken emailTocken = new EmailTocken();
+
+	User user;
+
+	@Autowired
+	RabbitTemplate rabbitTemplate;
+
+	@Override
+	@Transactional
+	public boolean register(RegistrationDTO registeruser, String url) {
+		user = new User();
+		user.setName(registeruser.getName());
+		user.setEmail(registeruser.getEmail());
+		user.setPassword(registeruser.getPassword());
+		user.setPhoneNumber(registeruser.getPhoneNumber());
+
+		User user2 = userDao.isExist(user.getEmail());
+
+		if (user2 == null) {
+
+			long id = userDao.register(user);
+
+			String tocken = JWT.createJWT(id + "", 3600000);
+			System.out.println("qqq " + tocken);
+
+			String tockenUrl =url +tocken;
+			// emailTocken.setTocken(tocken);
+			emailTocken.setEmail(user.getEmail());
+			// emailTocken.setUrl(url);
+			emailTocken.setTockenurl(tockenUrl);
+			emailTocken.setSubject("Verify User For Login");
+
+			rabbitTemplate.convertAndSend(FundooNotesConfiguration.topicExchangeName, "lazy.orange.rabbit",
+					emailTocken);
+
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public boolean login(LoginDTO loginuser) {
+		User user2 = userDao.isExist(loginuser.getEmail());
+		return BCrypt.checkpw(loginuser.getPassword(), user2.getPassword());
+	}
+
+	@Override
+	@Transactional
+	public boolean verify(String tocken) {
+
+		long id = JWT.parseJWT(tocken);
+
+		User user = userDao.get(id);
+
+		user.setVerified(true);
+
+		return userDao.update(user) ? true : false;
+	}
+
+	@Override
+	@Transactional
+	public boolean forgetPassWord(String email, String url) {
+
+		User user = userDao.isExist(email);
+		
+		boolean isVerifiedValue = user.isVerified();
+
+		if (isVerifiedValue == true) {
+
+			long id = user.getUserId();
+
+			LOGGER.info("reset pass " + id);
+
+			String tocken = JWT.createJWT(id + "", 3600000);
+			
+			String tockenurl = url +tocken;
+			
+			emailTocken.setEmail(user.getEmail());
+			emailTocken.setTockenurl(tockenurl);
+			emailTocken.setSubject("Link For Reset PassWord");
+			
+			rabbitTemplate.convertAndSend(FundooNotesConfiguration.topicExchangeName, "lazy.orange.rabbit",
+					emailTocken);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public boolean resetPassWord(String tocken, String newPass) {
+
+		long id = JWT.parseJWT(tocken);
+
+		User user = userDao.get(id);
+
+		user.setPassword(newPass);
+		String pw_hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		user.setPassword(pw_hash);
+
+		userDao.update(user);
+
+		return userDao.update(user) ? true : false;
+	}
+
+}

@@ -1,0 +1,86 @@
+package com.bridgeit.fundoonotes.notes.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bridgeit.fundoonotes.notes.dao.NotesDAO;
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.user.dao.UserDao;
+import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.utility.JWT;
+
+@Service
+public class NotesService implements INotesService {
+
+	Notes notes;
+	
+	@Autowired
+	NotesDTO noteDTO;
+	
+	@Autowired
+	UserDao userDao;
+	
+	@Autowired
+	NotesDAO notesDAO;
+	
+	@Override
+	@Transactional
+	public NotesDTO createNotes(String tocken,NotesDTO dto) {
+		
+		long id=JWT.parseJWT(tocken);
+		
+		User user=userDao.getUserById(id);
+		
+		Notes note=new Notes(dto);
+		note.setUserid(user);
+		
+		long noteid=notesDAO.save(note);
+		
+		note=notesDAO.getNoteById(noteid);
+		
+		noteDTO.setTitle(note.getTitle());
+		noteDTO.setDiscription(note.getDiscription());
+		noteDTO.setArchive(note.getArchive());
+		noteDTO.setPin(note.isPin());
+		noteDTO.setTrash(note.getTrash());
+	    
+		return noteDTO;
+	}
+
+	@Override
+	@Transactional
+	public List<NotesDTO> getAllNotes(String token) {
+		
+		System.out.println("sssss notes service "+token);
+		
+		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
+		long id=JWT.parseJWT(token);
+		
+		User user=userDao.getUserById(id);
+		
+		System.out.println("qqqq "+user);
+		
+		List<Notes> listNote=notesDAO.getAllNotes(user);
+		
+		for(Notes note : listNote){
+			
+			noteDTO.setTitle(note.getTitle());
+			noteDTO.setDiscription(note.getDiscription());
+			noteDTO.setArchive(note.getArchive());
+			noteDTO.setTrash(note.getTrash());
+			noteDTO.setPin(note.isPin());
+			
+			liNotesDTOs.add(noteDTO);
+			
+		}
+		System.out.println("after dao in service ");
+		
+		return  liNotesDTOs;
+	}
+
+}

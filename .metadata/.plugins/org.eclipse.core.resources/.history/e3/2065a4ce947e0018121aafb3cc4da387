@@ -1,0 +1,25 @@
+package com.bridgeit.fundoonotes.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class TokenUtil {
+
+	@Autowired
+	  private RedisTemplate redisTemplate;
+	  
+	  public void setToken(String key, String token) {
+		  System.out.println(key+token);
+		  redisTemplate.opsForValue().set(key, token);
+	  }	  
+	  public String getToken(String key) {
+		  System.out.println("get"+key);
+		  return redisTemplate.opsForValue().get(key);
+	  }
+	  public void deleteUser(String key) {
+		  System.out.println(key);
+		  redisTemplate.delete(key);
+	  }	  
+}

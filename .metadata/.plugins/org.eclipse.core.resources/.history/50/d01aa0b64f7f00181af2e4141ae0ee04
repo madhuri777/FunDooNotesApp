@@ -1,0 +1,5 @@
+package com.bridgeit.fundoonotes.notes.service;
+
+public class NotesService implements INotesService {
+
+}

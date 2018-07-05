@@ -1,0 +1,78 @@
+package com.bridgeit.fundoonotes.notes.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="notes")
+public class Notes {
+
+	@Column
+	private int id;
+	
+	@Column
+	private long userid;
+	
+	@Column
+	private String title;
+	
+	@Column
+	private String discription;
+	
+	@Column
+	private String colour;
+	
+	@Column
+	private boolean archive;
+	
+	@Column
+	private boolean trash;
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public long getUserid() {
+		return userid;
+	}
+	public void setUserid(long userid) {
+		this.userid = userid;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDiscription() {
+		return discription;
+	}
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
+	public String getColour() {
+		return colour;
+	}
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+	public boolean getArchive() {
+		return archive;
+	}
+	public void setArchive(boolean archive) {
+		this.archive = archive;
+	}
+	public boolean getTrash() {
+		return trash;
+	}
+	public void setTrash(boolean trash) {
+		this.trash = trash;
+	}
+	
+	
+	
+}

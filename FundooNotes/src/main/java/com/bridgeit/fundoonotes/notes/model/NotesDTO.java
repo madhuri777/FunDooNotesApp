@@ -1,53 +1,39 @@
 package com.bridgeit.fundoonotes.notes.model;
 
-import java.util.Date;
-
-import com.bridgeit.fundoonotes.user.model.User;
-
 public class NotesDTO {
 
-	private User userid;
-	
-	private Date createdDate;
-	
-	private Date modifiedDate;
 	
 	private String title;
 	
 	private String discription;
-	
-	private String colour="white";
 	
 	private boolean archive=false;
 	
 	private boolean trash=false;
 	
 	private boolean pin=false;
+	
+	private String colour;
 
-	public User getUserid() {
-		return userid;
+    public String getColour() {
+		return colour;
 	}
 
-	public void setUserid(User userid) {
-		this.userid = userid;
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
+	public NotesDTO() {
+    	
+    }
+//    public NotesDTO(Notes notes) {
+//    	this.title=notes.getTitle();
+//    	this.discription=notes.getDiscription();
+//    	this.archive=notes.getArchive();
+//    	this.trash=notes.getTrash();
+//    	this.pin=notes.isPin();
+//    }
+	
 	public String getTitle() {
 		return title;
 	}
@@ -62,14 +48,6 @@ public class NotesDTO {
 
 	public void setDiscription(String discription) {
 		this.discription = discription;
-	}
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
 	}
 
 	public boolean isArchive() {
