@@ -47,11 +47,11 @@ public class UserController {
 	public ResponseEntity<String> login(@RequestBody LoginDTO loginuser, HttpServletResponse response) {
       
 		String tocken=userService.login(loginuser);
-		if (tocken!=null) {
+		//if (tocken!=null) {
 
 			return new ResponseEntity<String>("Login in Successfully  and ur tocken id==> \n "+tocken, HttpStatus.ACCEPTED);
-		}
-		return new ResponseEntity<String>("Invalid User Or Not Verified User", HttpStatus.CONFLICT);
+		//}
+		//return new ResponseEntity<String>("Invalid User Or Not Verified User", HttpStatus.CONFLICT);
 	}
 
 	

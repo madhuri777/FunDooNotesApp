@@ -59,7 +59,7 @@ public class Notes {
 	    this.pin=dto.isPin();
 	    this.createdDate=new Date();
 	    this.modifiedDate=createdDate;
-	    this.colour=getColour();
+	    this.colour=dto.getColour();
 	}
 	
 	public boolean isPin() {

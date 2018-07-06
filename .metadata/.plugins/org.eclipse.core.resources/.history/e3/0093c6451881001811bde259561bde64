@@ -1,0 +1,15 @@
+package com.bridgeit.fundoonotes.user.exception;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler{
+
+	 @ExceptionHandler(value=LoginException.class)
+	 public ResponseEntity<String> getException(){
+		 return new ResponseEntity<String>();
+	 }
+}

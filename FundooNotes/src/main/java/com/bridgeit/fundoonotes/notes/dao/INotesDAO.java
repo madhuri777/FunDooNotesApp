@@ -11,5 +11,5 @@ public interface INotesDAO {
 	List<Notes> getAllNotes(User user);
 	Notes getNoteById(long noteid);
 	boolean update(Notes notes);
-	//Notes getNoteById(long id);
+	boolean deletNoteById(long id);
 }

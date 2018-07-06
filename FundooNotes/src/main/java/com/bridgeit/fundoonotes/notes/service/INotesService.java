@@ -9,4 +9,5 @@ public interface INotesService {
 	NotesDTO createNotes(String token,NotesDTO dto);
 	List<NotesDTO> getAllNotes(String token);
 	boolean update(long id,String token,NotesDTO dto);
+	boolean delete(long id,String token);
 }

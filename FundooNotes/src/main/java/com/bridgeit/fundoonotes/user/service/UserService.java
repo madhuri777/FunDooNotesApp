@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bridgeit.fundoonotes.user.configuration.FundooNotesConfiguration;
 import com.bridgeit.fundoonotes.user.dao.IUserDao;
 import com.bridgeit.fundoonotes.user.dao.TokenUtil;
+import com.bridgeit.fundoonotes.user.exception.DataBaseException;
+import com.bridgeit.fundoonotes.user.exception.LoginException;
 import com.bridgeit.fundoonotes.user.model.EmailTocken;
 import com.bridgeit.fundoonotes.user.model.LoginDTO;
 import com.bridgeit.fundoonotes.user.model.RegistrationDTO;
@@ -37,7 +39,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public boolean register(RegistrationDTO registeruser, String url) {
+	public boolean register(RegistrationDTO registeruser, String url)throws DataBaseException {
 
 		String pw_hash = BCrypt.hashpw(registeruser.getPassword(), BCrypt.gensalt());
 
@@ -70,29 +72,27 @@ public class UserService implements IUserService {
 
 			return true;
 		}
-		return false;
+		throw new DataBaseException("Email Already Exist");
+		//return false;
 	}
 
 	@Override
 	@Transactional
-	public String login(LoginDTO loginuser) {
-		
-		boolean status=false;
-	
+	public String login(LoginDTO loginuser) throws LoginException {
+
+		String token;
+
 		User user2 = userDao.isExist(loginuser.getEmail());
-		
-		if(user2!=null&& user2.isVerified()==true) {
-			
-			long id=user2.getUserId();
-		    String tocken = JWT.createJWT(String.valueOf(id), 86400000);
-			System.out.println("login tocken "+tocken);
-			
-	    	 status=BCrypt.checkpw(loginuser.getPassword(), user2.getPassword());
-	    	 
-	    	 return status?tocken:null;
-		}
-		
-		return null;
+
+		if (user2 != null && user2.isVerified() == true
+				&& BCrypt.checkpw(loginuser.getPassword(), user2.getPassword())) {
+
+			long id = user2.getUserId();
+			token = JWT.createJWT(String.valueOf(id), 86400000);
+
+		} else
+			throw new LoginException("User Not Found"); // return null;
+		return token;
 	}
 
 	@Override
@@ -103,16 +103,16 @@ public class UserService implements IUserService {
 		long id = JWT.parseJWT(token);
 
 		String redisToken = tokenUtil.getToken(id + "");
-		LOGGER.info("redis in verify "+redisToken);
+		LOGGER.info("redis in verify " + redisToken);
 
 		if (token.equals(redisToken)) {
-			
+
 			User user = userDao.getUserById(id);
 
 			user.setVerified(true);
 
 			status = userDao.update(user);
-			
+
 			tokenUtil.deleteUser(String.valueOf(id));
 		}
 		return status;
@@ -124,7 +124,7 @@ public class UserService implements IUserService {
 
 		User user = userDao.isExist(email);
 
-		if (user!=null && user.isVerified() ==  true) {
+		if (user != null && user.isVerified() == true) {
 
 			long id = user.getUserId();
 
@@ -138,7 +138,7 @@ public class UserService implements IUserService {
 
 			rabbitTemplate.convertAndSend(FundooNotesConfiguration.topicExchangeName, "lazy.orange.rabbit",
 					emailTocken);
-			
+
 			tokenUtil.setToken(String.valueOf(id), token);
 
 			return true;
@@ -151,26 +151,26 @@ public class UserService implements IUserService {
 	@Transactional
 	public boolean resetPassWord(String tocken, String newPass) {
 
-		boolean status=false;
-		
+		boolean status = false;
+
 		long id = JWT.parseJWT(tocken);
 
-		String redistoken=tokenUtil.getToken(String.valueOf(id));
+		String redistoken = tokenUtil.getToken(String.valueOf(id));
 
-		if(tocken.equals(redistoken)) {
-			
+		if (tocken.equals(redistoken)) {
+
 			User user = userDao.getUserById(id);
 
-			//user.setPassword(newPass);
+			// user.setPassword(newPass);
 
 			String pw_hash = BCrypt.hashpw(newPass, BCrypt.gensalt());
 
 			user.setPassword(pw_hash);
-			
-			status=userDao.update(user);
+
+			status = userDao.update(user);
 
 		}
-		
+
 		return status;
 	}
 

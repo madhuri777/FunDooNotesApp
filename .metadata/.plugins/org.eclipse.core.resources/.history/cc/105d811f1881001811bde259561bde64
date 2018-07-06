@@ -1,0 +1,8 @@
+package com.bridgeit.fundoonotes.user.exception;
+
+public class LoginException extends GlobalExceptionHandler{
+
+	public LoginException() {
+		super();
+	}
+}

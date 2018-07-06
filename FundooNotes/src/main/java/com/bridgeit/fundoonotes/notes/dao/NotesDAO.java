@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.user.model.User;
+import org.hibernate.query.Query;
 
 @Repository
 public class NotesDAO implements INotesDAO{
@@ -53,6 +54,14 @@ public class NotesDAO implements INotesDAO{
 		sessionFactory.getCurrentSession().update(notes);
 		System.out.println("upadted ");
 		return false;
+	}
+
+	@Override
+	public boolean deletNoteById(long id) {
+		System.out.println("note id "+id);
+		int result=sessionFactory.getCurrentSession().createQuery("delete from Notes where id=:id").setParameter("id",id).executeUpdate();
+		System.out.println(result);
+		return result==1?true:false;
 	}
 
 }

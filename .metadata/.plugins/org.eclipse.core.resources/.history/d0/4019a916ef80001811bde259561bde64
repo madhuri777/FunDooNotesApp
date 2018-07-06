@@ -1,0 +1,5 @@
+package com.bridgeit.fundoonotes.user.exception;
+
+public class DataBaseException {
+
+}

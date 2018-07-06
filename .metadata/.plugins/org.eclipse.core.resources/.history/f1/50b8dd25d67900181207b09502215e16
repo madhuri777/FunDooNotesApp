@@ -1,6 +1,0 @@
-package com.bridgeit.fundoonotes.model;
-
-public class LoginDTO {
-
-	private String email;
-}

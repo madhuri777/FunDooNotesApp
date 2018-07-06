@@ -58,4 +58,16 @@ public class NotesController {
 		}
 		return new ResponseEntity<String>("Not Updated",HttpStatus.CONFLICT);
 	}
+	
+	@RequestMapping(value="deletnote/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity<String>deletNote(@PathVariable("id") long id,HttpServletRequest request){
+		String token=request.getHeader("userid");
+		
+		boolean status=iNotesService.delete(id, token);
+		
+		if(status) {
+			return new ResponseEntity<String>("note deleted successfully",HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("this id's note not present ",HttpStatus.CONFLICT);
+	}
 }

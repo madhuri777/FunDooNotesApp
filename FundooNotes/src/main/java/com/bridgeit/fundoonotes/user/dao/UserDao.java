@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
+
+import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
 
 @Repository
@@ -31,15 +33,16 @@ public class UserDao implements IUserDao {
 	@SuppressWarnings({ "deprecation" })
 	@Override
 	public User isExist(String email) { 
-		LOGGER.info("Dao" +email);
+
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("email",email));
 		User user2= (User) criteria.uniqueResult();
-		LOGGER.info("user dao"+ user2);
+
 		return user2!=null ? user2 :null;
 	}
 
 	@Override
-	public boolean update(User user) {
+	public boolean update(User user)throws DataBaseException {
+	
 		sessionFactory.getCurrentSession().update(user);
 		LOGGER.info("upadted ");
 		return true;

@@ -4,13 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+public class GlobalExceptionHandler{
 
-	@ExceptionHandler(value=RuntimeException.class)
-	public ResponseEntity<?> getException(RuntimeException exception){
-		return new ResponseEntity<String>(exception.getMessage(),HttpStatus.BAD_REQUEST);
-	}
+	 @ExceptionHandler(value=LoginException.class)
+	 public ResponseEntity<String> getLoginException(LoginException exception){
+		 return new ResponseEntity<String>(exception.getMessage(),HttpStatus.NOT_FOUND);
+	 }
+
+     @ExceptionHandler(value=DataBaseException.class)
+     public ResponseEntity<String> getDatabaseException(DataBaseException baseException){
+    	 return new ResponseEntity<String>(baseException.getMessage(),HttpStatus.CONFLICT);
+     }
 }
