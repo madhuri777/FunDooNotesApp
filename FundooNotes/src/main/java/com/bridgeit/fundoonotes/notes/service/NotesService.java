@@ -12,6 +12,7 @@ import com.bridgeit.fundoonotes.notes.dao.NotesDAO;
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.dao.UserDao;
+import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.utility.JWT;
 
@@ -72,6 +73,7 @@ public class NotesService implements INotesService {
 		for(Notes note : listNote){
 			
 			NotesDTO notesDTO1=new NotesDTO();
+			notesDTO1.setNoteid(note.getId());
 			notesDTO1.setTitle(note.getTitle());
 			notesDTO1.setDiscription(note.getDiscription());
 			notesDTO1.setArchive(note.getArchive());
@@ -88,24 +90,36 @@ public class NotesService implements INotesService {
 
 	@Override
 	@Transactional
-	public boolean update(long id, String token,NotesDTO dto) {
+	public boolean update(long id, String token,NotesDTO dto)throws DataBaseException {
+		
+		//long noteid=dto.getNoteid();
+		
+		System.out.println("note "+id);
+		
 		Notes note=notesDAO.getNoteById(id);
-		System.out.println("update service "+note);
+		
 		long userid=note.getUserid().getUserId();
-		System.out.println("user id "+userid);
+		System.out.println("userid "+userid);
+		
 		long tokenid=JWT.parseJWT(token);
-		System.out.println("token id "+tokenid);
+		
 		if(userid==tokenid) {
+			
+			
 			Notes notes=new Notes(dto);
-//			note.setTitle(dto.getTitle());
-//            note.setDiscription(dto.getDiscription());
-//            note.setTrash(dto.isTrash());
-//            note.setColour(dto.getColour());
-//            note.setArchive(dto.isArchive());
-//            note.setPin(dto.isPin());
             notes.setModifiedDate(new Date());
-			notesDAO.update(notes);
-			System.out.println("update success in service ");
+			
+            note.setTitle(notes.getTitle());
+            note.setDiscription(notes.getDiscription());
+            note.setArchive(notes.getArchive());
+            note.setColour(notes.getColour());
+            note.setPin(notes.isPin());
+            note.setTrash(notes.getTrash());
+            note.setModifiedDate(notes.getModifiedDate());
+            
+            
+            notesDAO.update(note);
+			
 			return true;
 		}
 		return false;
@@ -113,16 +127,13 @@ public class NotesService implements INotesService {
 
 	@Override
 	@Transactional
-	public boolean delete(long noteid, String token) {
+	public boolean delete(long noteid, String token)throws DataBaseException {
 		
 		boolean status=false;
 		
 		long userid=JWT.parseJWT(token);
-		User user=userDao.getUserById(userid);
-		Notes note=notesDAO.getNoteById(noteid);
-		System.out.println("usercha id userdatabase madhun "+user.getUserId());
 		
-		System.out.println("usercha id from dileleya token madhun "+userid);
+		Notes note=notesDAO.getNoteById(noteid);
 		
 		if(userid==note.getUserid().getUserId()) {
 			
@@ -130,8 +141,6 @@ public class NotesService implements INotesService {
 			
 			return status;
 		}
-		
-		
 		return status;
 	}
 

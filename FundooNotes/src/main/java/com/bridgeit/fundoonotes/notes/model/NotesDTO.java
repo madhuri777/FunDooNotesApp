@@ -2,7 +2,15 @@ package com.bridgeit.fundoonotes.notes.model;
 
 public class NotesDTO {
 
-	
+	private long noteid;
+	public long getNoteid() {
+		return noteid;
+	}
+
+	public void setNoteid(long noteid) {
+		this.noteid = noteid;
+	}
+
 	private String title;
 	
 	private String discription;

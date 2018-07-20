@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.notes.service.INotesService;
+import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 
 @RestController
 public class NotesController {
@@ -55,14 +56,17 @@ public class NotesController {
 		boolean status=iNotesService.update(id, token,dto);
 		if(status) {
 			return new ResponseEntity<String>("updated Note ",HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>("Not Updated",HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<String>("Not Updated",HttpStatus.CONFLICT);
+		
 	}
 	
 	@RequestMapping(value="deletnote/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<String>deletNote(@PathVariable("id") long id,HttpServletRequest request){
-		String token=request.getHeader("userid");
 		
+		String token=request.getHeader("userid");
+
 		boolean status=iNotesService.delete(id, token);
 		
 		if(status) {

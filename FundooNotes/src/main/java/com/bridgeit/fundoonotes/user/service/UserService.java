@@ -1,5 +1,7 @@
 package com.bridgeit.fundoonotes.user.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -47,7 +49,6 @@ public class UserService implements IUserService {
 		user.setName(registeruser.getName());
 		user.setEmail(registeruser.getEmail());
 		user.setPassword(pw_hash);
-		// user.setPassword(registeruser.getPassword());
 		user.setPhoneNumber(registeruser.getPhoneNumber());
 
 		User user2 = userDao.isExist(user.getEmail());
@@ -71,9 +72,10 @@ public class UserService implements IUserService {
 			tokenUtil.setToken(id + "", tocken);
 
 			return true;
-		}
+		}else
+			
 		throw new DataBaseException("Email Already Exist");
-		//return false;
+		
 	}
 
 	@Override
@@ -90,9 +92,11 @@ public class UserService implements IUserService {
 			long id = user2.getUserId();
 			token = JWT.createJWT(String.valueOf(id), 86400000);
 
-		} else
-			throw new LoginException("User Not Found"); // return null;
-		return token;
+			return token;
+		} 
+//		else
+//			throw new LoginException("User Not Found"); // return null;
+		return null;
 	}
 
 	@Override
@@ -120,7 +124,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public boolean forgetPassWord(String email, String url) {
+	public boolean forgetPassWord(String email, String url)throws LoginException {
 
 		User user = userDao.isExist(email);
 
@@ -142,9 +146,10 @@ public class UserService implements IUserService {
 			tokenUtil.setToken(String.valueOf(id), token);
 
 			return true;
-		}
+		}else
+			
+			throw new LoginException("Not Verified User");
 
-		return false;
 	}
 
 	@Override
@@ -161,8 +166,6 @@ public class UserService implements IUserService {
 
 			User user = userDao.getUserById(id);
 
-			// user.setPassword(newPass);
-
 			String pw_hash = BCrypt.hashpw(newPass, BCrypt.gensalt());
 
 			user.setPassword(pw_hash);
@@ -172,6 +175,21 @@ public class UserService implements IUserService {
 		}
 
 		return status;
+	}
+
+	@Override
+	public boolean changePassWord(String token,HttpServletResponse res) throws Exception {
+		long id = JWT.parseJWT(token);
+
+		String redistoken = tokenUtil.getToken(String.valueOf(id));
+		
+		if(token.equals(redistoken)) {
+			
+			System.out.println("send redisrect method");
+			res.sendRedirect("http://127.0.0.1:8081/#!/resetPassword?token="+token);
+			return true;
+		}
+		return false;
 	}
 
 }

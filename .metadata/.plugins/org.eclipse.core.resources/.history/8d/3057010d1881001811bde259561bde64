@@ -1,8 +1,0 @@
-package com.bridgeit.fundoonotes.user.exception;
-
-public class DataBaseException extends RuntimeException {
-
-	public DataBaseException(String message) {
-		super("SQL Exception");
-	}
-}

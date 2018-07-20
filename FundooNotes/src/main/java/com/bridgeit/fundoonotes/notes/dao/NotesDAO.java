@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
-import org.hibernate.query.Query;
 
 @Repository
 public class NotesDAO implements INotesDAO{
@@ -40,28 +40,36 @@ public class NotesDAO implements INotesDAO{
 		return noteList;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Notes getNoteById(long noteid) {
-		@SuppressWarnings("deprecation")
+	public Notes getNoteById(long noteid)throws DataBaseException {
+		
 		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("id",noteid));
 		Notes notes= (Notes) criteria.uniqueResult();
-		System.out.println("dhhsdhbvb sas dao "+notes);
-		return notes;
+		
+		if(notes!=null) {
+			return notes;
+		}else
+			throw new DataBaseException("Exception: NullPointer Exception, Note does not exists");
 	}
 
 	@Override
 	public boolean update(Notes notes) {
+		
 		sessionFactory.getCurrentSession().update(notes);
-		System.out.println("upadted ");
+		
 		return false;
 	}
 
 	@Override
-	public boolean deletNoteById(long id) {
+	public boolean deletNoteById(long id)throws DataBaseException {
 		System.out.println("note id "+id);
 		int result=sessionFactory.getCurrentSession().createQuery("delete from Notes where id=:id").setParameter("id",id).executeUpdate();
 		System.out.println(result);
-		return result==1?true:false;
+		if(result==1) {
+			return true;
+		}else
+			throw new DataBaseException("Exception: Row not deleted");
 	}
 
 }

@@ -7,29 +7,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class RegistrationDTO {
 
-	private long userId;
 	
-	@NotEmpty
-	@Size(min=3,max=12)
 	private String name;
 	
-	@NotEmpty
-	@Email
 	private String email;
 	
-	@NotEmpty
-	@Size(min=6)
 	private String password;
 	
 	private long phoneNumber;
 
-	public long getUserId() {
-		return userId;
-	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
 
 	public String getName() {
 		return name;

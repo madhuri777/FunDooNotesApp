@@ -18,13 +18,12 @@ public class UserDao implements IUserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDao.class);
-	
+
 	@Override
 	public long register(User user) {
-//		String pw_hash=BCrypt.hashpw(user.getPassword(),BCrypt.gensalt());
-//		user.setPassword(pw_hash);
+
 		Session session = sessionFactory.openSession();
 		long userId = (Long) session.save(user);
 		return userId;
@@ -32,17 +31,18 @@ public class UserDao implements IUserDao {
 
 	@SuppressWarnings({ "deprecation" })
 	@Override
-	public User isExist(String email) { 
+	public User isExist(String email) {
 
-		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("email",email));
-		User user2= (User) criteria.uniqueResult();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("email", email));
+		User user2 = (User) criteria.uniqueResult();
 
-		return user2!=null ? user2 :null;
+		return user2 != null ? user2 : null;
 	}
 
 	@Override
-	public boolean update(User user)throws DataBaseException {
-	
+	public boolean update(User user) throws DataBaseException {
+
 		sessionFactory.getCurrentSession().update(user);
 		LOGGER.info("upadted ");
 		return true;
@@ -51,11 +51,10 @@ public class UserDao implements IUserDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public User getUserById(long id) {
-		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("userId",id));
-		User user2= (User) criteria.uniqueResult();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("userId", id));
+		User user2 = (User) criteria.uniqueResult();
 		return user2;
 	}
-
-	
 
 }

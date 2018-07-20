@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgeit.fundoonotes.user.model.ForgetPassWordDTO;
 import com.bridgeit.fundoonotes.user.model.LoginDTO;
 import com.bridgeit.fundoonotes.user.model.RegistrationDTO;
-import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.model.Response;
 import com.bridgeit.fundoonotes.user.service.IUserService;
+
 
 @RestController
 public class UserController {
@@ -28,31 +29,38 @@ public class UserController {
 	private IUserService userService;
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ResponseEntity<User> save(@Validated @RequestBody RegistrationDTO registeruser, HttpServletRequest request) {
+	public ResponseEntity<?> save(@Validated @RequestBody RegistrationDTO registeruser, HttpServletRequest request,Response res) {
 
+		
 		String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "" + request.getContextPath()
 				+ "/activeuser/";
+		
 		boolean flag=userService.register(registeruser, url);
 
-		if (flag) {
-			return new ResponseEntity<User>(HttpStatus.OK);
-		}
-		return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		res.setMessage("Registration Done");
+		//if (flag) {
+			return new ResponseEntity<Response>(res,HttpStatus.OK);
+//		}
+//		return new ResponseEntity<String>("Registrion Not Done",HttpStatus.CONFLICT);
 
 	}
 
 	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestBody LoginDTO loginuser, HttpServletResponse response) {
+	public ResponseEntity<?> login(@RequestBody LoginDTO loginuser, HttpServletResponse response,Response res) {
       
-		String tocken=userService.login(loginuser);
-		//if (tocken!=null) {
-
-			return new ResponseEntity<String>("Login in Successfully  and ur tocken id==> \n "+tocken, HttpStatus.ACCEPTED);
-		//}
-		//return new ResponseEntity<String>("Invalid User Or Not Verified User", HttpStatus.CONFLICT);
-	}
+		String token=userService.login(loginuser);
+		if(token!=null) {
+             res.setToken(token);
+             res.setMessage("Login Successfully ");
+			return new ResponseEntity<Response>(res, HttpStatus.OK);
+		
+		}else {
+			res.setMessage("User Not Found Or User Not Activated");
+			return new ResponseEntity<Response>(res,HttpStatus.CONFLICT);
+		}
+		}
 
 	
 	
@@ -70,34 +78,50 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/forgetpassword", method = RequestMethod.POST)
-	public ResponseEntity<String> forgetPassWord(@RequestBody ForgetPassWordDTO forgetpasswd,
-			HttpServletRequest request) {
+	public ResponseEntity<?> forgetPassWord(@RequestBody ForgetPassWordDTO forgetpasswd,
+			HttpServletRequest request,Response res) {
 
 		String url = "http://" + request.getServerName() + ":" + request.getServerPort() + "" + request.getContextPath()
-				+ "/resetpassword/";
+				+ "/changepassword/";
 
 		LOGGER.info("url " + url);
 
 		String emailId = forgetpasswd.getEmail();
 
 		if (userService.forgetPassWord(emailId, url)) {
-
-			return new ResponseEntity<String>("Link Sent For Reset the passWord", HttpStatus.ACCEPTED);
+            res.setMessage("Link Sent For Reset the passWord");
+			return new ResponseEntity<Response>(res, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("User is Not verifed", HttpStatus.CONFLICT);
+		res.setMessage("User is Not verifed");
+		return new ResponseEntity<Response>(res, HttpStatus.CONFLICT);
 	}
 
 	
+	@RequestMapping(value="/changepassword/{token:.+}",method=RequestMethod.GET)
+	public ResponseEntity<?> changePassWord(@PathVariable("token") String token,HttpServletResponse res) throws Exception{
+		System.out.println("changePassWord");
+		boolean flag=userService.changePassWord(token,res);
+		System.out.printf("flag ",flag);
+		if(flag) {
+			
+		return new ResponseEntity<String>("ok",HttpStatus.OK); 
+	}
+	    return new ResponseEntity<String>("Bad Request",HttpStatus.BAD_REQUEST);
+	}
+	
 	@RequestMapping(value = "/resetpassword/{tocken:.+}", method = RequestMethod.PUT)
-	public ResponseEntity<String> resetPassWord(@PathVariable("tocken") String tocken, @RequestBody String password) {
+	public ResponseEntity<?> resetPassWord(@PathVariable("tocken") String tocken, @RequestBody ForgetPassWordDTO password,Response res) {
 
-		boolean flag = userService.resetPassWord(tocken, password);
+		System.out.println("reset service backend "+tocken);
+		boolean flag = userService.resetPassWord(tocken, password.getNewPassWord());
 
 		if (flag) {
 
-			return new ResponseEntity<String>("PssWord Set Successfuly", HttpStatus.ACCEPTED);
-		}
-		return new ResponseEntity<String>("Can't ResetPassWord", HttpStatus.CONFLICT);
+			res.setMessage("PssWord Set Successfuly");
+			return new ResponseEntity<Response>(res, HttpStatus.ACCEPTED);
+		}else {
+			res.setMessage("Can't ResetPassWord");
+		return new ResponseEntity<Response>(res, HttpStatus.CONFLICT);
 	}
-
+	}
 }

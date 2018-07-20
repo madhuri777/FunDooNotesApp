@@ -1,7 +1,0 @@
-package com.bridgeit.fundoonotes.notes.service;
-
-public interface INotesService {
-
-	boolean createNotes();
-	
-}

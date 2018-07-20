@@ -1,0 +1,37 @@
+127.0.0.1 - - [14/Jul/2018:09:02:14 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:02:15 +0530] "GET /FundooNotes/ HTTP/1.1" 200 134
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:02:16 +0530] "GET /favicon.ico HTTP/1.1" 404 1084
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:02:22 +0530] "OPTIONS /FundooNotes/login HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:02:23 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:17:27 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:17:27 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:17:27 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:09:17:27 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:10:20:39 +0530] "OPTIONS /FundooNotes/login HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:10:20:40 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:12:10:03 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:12:10:03 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:12:10:03 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:12:10:03 +0530] "-" 400 2243
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:12:10:03 +0530] "-" 400 2243
+127.0.0.1 - - [14/Jul/2018:15:24:47 +0530] "GET / HTTP/1.1" 404 1073
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:24:48 +0530] "GET /FundooNotes/ HTTP/1.1" 200 134
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:24:48 +0530] "GET /favicon.ico HTTP/1.1" 404 1084
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:24:52 +0530] "OPTIONS /FundooNotes/login HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:24:52 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:32:29 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:34:02 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:34:39 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:38:25 +0530] "OPTIONS /FundooNotes/login HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:38:25 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:43:26 +0530] "OPTIONS /FundooNotes/registration HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:43:26 +0530] "POST /FundooNotes/registration HTTP/1.1" 500 20001
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:44:06 +0530] "POST /FundooNotes/registration HTTP/1.1" 409 19
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:44:57 +0530] "POST /FundooNotes/registration HTTP/1.1" 200 55
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:59:11 +0530] "OPTIONS /FundooNotes/forgetpassword HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:59:11 +0530] "POST /FundooNotes/forgetpassword HTTP/1.1" 200 70
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:15:59:25 +0530] "GET /FundooNotes/changepassword/eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNyIsImlhdCI6MTUzMTU2NDE1MSwic3ViIjoidG9ja2VucyIsImlzcyI6ImFiayIsImV4cCI6MTUzMTU2Nzc1MX0.rQK9EU4ivkXFsTMTPPcgZ6QLJhFB96gJdPjgoCIKNYQ HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:16:00:39 +0530] "OPTIONS /FundooNotes/resetpassword/eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNyIsImlhdCI6MTUzMTU2NDE1MSwic3ViIjoidG9ja2VucyIsImlzcyI6ImFiayIsImV4cCI6MTUzMTU2Nzc1MX0.rQK9EU4ivkXFsTMTPPcgZ6QLJhFB96gJdPjgoCIKNYQ HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:16:00:40 +0530] "PUT /FundooNotes/resetpassword/eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNyIsImlhdCI6MTUzMTU2NDE1MSwic3ViIjoidG9ja2VucyIsImlzcyI6ImFiayIsImV4cCI6MTUzMTU2Nzc1MX0.rQK9EU4ivkXFsTMTPPcgZ6QLJhFB96gJdPjgoCIKNYQ HTTP/1.1" 202 61
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:16:02:36 +0530] "OPTIONS /FundooNotes/login HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [14/Jul/2018:16:02:36 +0530] "POST /FundooNotes/login HTTP/1.1" 200 219

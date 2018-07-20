@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler{
 
 	 @ExceptionHandler(value=LoginException.class)
-	 public ResponseEntity<String> getLoginException(LoginException exception){
-		 return new ResponseEntity<String>(exception.getMessage(),HttpStatus.NOT_FOUND);
+	 public ResponseEntity<LoginException> getLoginException(LoginException exception){
+		 return new ResponseEntity<LoginException>(exception,HttpStatus.NOT_FOUND);
 	 }
 
      @ExceptionHandler(value=DataBaseException.class)
-     public ResponseEntity<String> getDatabaseException(DataBaseException baseException){
+     public ResponseEntity<?> getDatabaseException(DataBaseException baseException){
     	 return new ResponseEntity<String>(baseException.getMessage(),HttpStatus.CONFLICT);
      }
 }

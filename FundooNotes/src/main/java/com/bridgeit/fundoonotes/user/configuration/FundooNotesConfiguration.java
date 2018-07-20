@@ -36,7 +36,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
@@ -209,6 +211,16 @@ public class FundooNotesConfiguration {
 	   return new NotesDTO();
    }
 
+//-------------------------------------------------Cors Connection------------------------------
 
-
+   @Bean
+   public WebMvcConfigurer corsConfigurer() {
+       return new WebMvcConfigurer() {
+           @Override
+           public void addCorsMappings(CorsRegistry registry) {
+               registry.addMapping("/**").allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+           }
+       };
+   }
+   
 }

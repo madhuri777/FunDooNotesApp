@@ -1,8 +1,0 @@
-package com.bridgeit.fundoonotes.user.exception;
-
-public class DataBaseException extends GlobalExceptionHandler {
-
-	DataBaseException(){
-		super("row not update");
-	}
-}
