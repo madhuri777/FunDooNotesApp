@@ -19,7 +19,7 @@ import com.bridgeit.fundoonotes.user.utility.JWT;
 @Service
 public class NotesService implements INotesService {
 
-	Notes notes;
+//	Notes notes;
 	
 	
 	@Autowired
@@ -79,7 +79,8 @@ public class NotesService implements INotesService {
 			notesDTO1.setArchive(note.getArchive());
 			notesDTO1.setTrash(note.getTrash());
 			notesDTO1.setPin(note.isPin());
-			
+			 notesDTO1.setColour(note.getColour());
+			 notesDTO1.setReminder(note.getReminder());
 			liNotesDTOs.add(notesDTO1);
 			
 		}
@@ -116,7 +117,7 @@ public class NotesService implements INotesService {
             note.setPin(notes.isPin());
             note.setTrash(notes.getTrash());
             note.setModifiedDate(notes.getModifiedDate());
-            
+            note.setReminder(notes.getReminder());
             
             notesDAO.update(note);
 			

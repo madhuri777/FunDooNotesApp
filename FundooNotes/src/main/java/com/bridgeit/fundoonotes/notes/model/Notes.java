@@ -2,6 +2,8 @@ package com.bridgeit.fundoonotes.notes.model;
 
 //import java.sql.Date;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bridgeit.fundoonotes.labels.model.Labels;
 import com.bridgeit.fundoonotes.user.model.User;
 
 @Entity
@@ -25,11 +29,17 @@ public class Notes {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private User userid;
 	
+	@ManyToMany(cascade=CascadeType.ALL)
+	private Set<Labels> label=new HashSet<Labels>();
+	
 	@Column
 	private Date createdDate;
 	
 	@Column
 	private Date modifiedDate;
+	
+	@Column
+	private Date reminder;
 	
 	@Column
 	private String title;
@@ -58,6 +68,7 @@ public class Notes {
 	    this.archive=dto.isArchive();
 	    this.trash=dto.isTrash();
 	    this.pin=dto.isPin();
+	    this.reminder=dto.getReminder();
 	    this.createdDate=new Date();
 	    this.modifiedDate=createdDate;
 	    this.colour=dto.getColour();
@@ -123,5 +134,18 @@ public class Notes {
 	public void setTrash(boolean trash) {
 		this.trash = trash;
 	}
+	public Date getReminder() {
+		return reminder;
+	}
+	public void setReminder(Date reminder) {
+		this.reminder = reminder;
+	}
+	public Set<Labels> getLabel() {
+		return label;
+	}
+	public void setLabel(Set<Labels> label) {
+		this.label = label;
+	}
+	
 	
 }

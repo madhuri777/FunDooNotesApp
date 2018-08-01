@@ -1,5 +1,7 @@
 package com.bridgeit.fundoonotes.notes.model;
 
+import java.util.Date;
+
 public class NotesDTO {
 
 	private long noteid;
@@ -22,8 +24,20 @@ public class NotesDTO {
 	private boolean pin=false;
 	
 	private String colour;
+	 
+	private Date reminder;
+	
+	
 
-    public String getColour() {
+    public Date getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(Date reminder) {
+		this.reminder = reminder;
+	}
+
+	public String getColour() {
 		return colour;
 	}
 

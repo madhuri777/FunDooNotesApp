@@ -40,6 +40,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.bridgeit.fundoonotes.labels.model.Labels;
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.model.EmailTocken;
@@ -87,7 +88,7 @@ public class FundooNotesConfiguration {
 
 		sessionFactoryBean.setDataSource(dataSource());
 		sessionFactoryBean.setHibernateProperties(properties);
-		sessionFactoryBean.setAnnotatedClasses(User.class,Notes.class);
+		sessionFactoryBean.setAnnotatedClasses(User.class,Notes.class,Labels.class);
 		return sessionFactoryBean;
 
 	}
@@ -201,11 +202,11 @@ public class FundooNotesConfiguration {
 	
 //--------------------------------------------------Notes Configuration--------------------------------------	
 
-   @Bean
-   public Notes notes() {
-	   return new Notes();
-   }
-
+//   @Bean
+//   public Notes notes() {
+//	   return new Notes();
+//   }
+//
    @Bean
    public NotesDTO notesDTO() {
 	   return new NotesDTO();
