@@ -61,6 +61,11 @@ public class Labels {
 	public void setNote(Set<Notes> note) {
 		this.note = note;
 	}
+	@Override
+	public String toString() {
+		return "Labels [labelId=" + labelId + ", labelName=" + labelName + ", note=" + note + ", userid=" + userid
+				+ "]";
+	}
 	
 	
 }

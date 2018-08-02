@@ -22,35 +22,64 @@ public class LabelController {
 
 	@Autowired
 	private ILabelService iLabelService;
-	
-	@RequestMapping(value="/createlabel",method=RequestMethod.POST)
-	public ResponseEntity<Response> createlabel(HttpServletRequest request,@RequestBody LabelDTO ldto,Response response ){
-		
-		String token=request.getHeader("userid"); 
-		   
-		boolean flag=iLabelService.createLabel(token,ldto);
-		if(flag) {
+
+	@RequestMapping(value = "/createlabel", method = RequestMethod.POST)
+	public ResponseEntity<Response> createlabel(HttpServletRequest request, @RequestBody LabelDTO ldto,
+			Response response) {
+
+		String token = request.getHeader("userid");
+
+		boolean flag = iLabelService.createLabel(token, ldto);
+		if (flag) {
 			response.setMessage("label created");
-		return new ResponseEntity<Response>(response,HttpStatus.OK);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		}
 		response.setMessage("label Not created or already exist ");
-		return new ResponseEntity<Response>(response,HttpStatus.CONFLICT);
+		return new ResponseEntity<Response>(response, HttpStatus.CONFLICT);
 	}
-	
-	@RequestMapping(value="/getallabels",method=RequestMethod.GET)
-	public ResponseEntity<List<LabelDTO>> getAllLabels(HttpServletRequest request){
-		
-		String token=request.getHeader("userid");
-		
-		List<LabelDTO> list=iLabelService.getAllLabels(token);
-		
-		return new ResponseEntity<List<LabelDTO>>(list,HttpStatus.OK);
+
+	@RequestMapping(value = "/getallabels", method = RequestMethod.GET)
+	public ResponseEntity<List<LabelDTO>> getAllLabels(HttpServletRequest request) {
+
+		String token = request.getHeader("userid");
+
+		List<LabelDTO> list = iLabelService.getAllLabels(token);
+
+		return new ResponseEntity<List<LabelDTO>>(list, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/updatelabel/{labelId}",method=RequestMethod.PUT)
-	public ResponseEntity<?> updateLabels(@PathVariable long labelId,@RequestBody LabelDTO dto,HttpServletRequest request){
-		
-		String token=request.getHeader("userid");
-		return new ResponseEntity<String>("updated",HttpStatus.OK);
+
+	@RequestMapping(value = "/updatelabel/{labelId}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateLabels(@PathVariable long labelId, @RequestBody LabelDTO dto,
+			HttpServletRequest request, Response response) {
+
+		String token = request.getHeader("userid");
+
+		boolean flag = iLabelService.updateLabels(labelId, token, dto);
+
+		if (flag) {
+
+			response.setMessage("updated");
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+
+		}
+		response.setMessage("Not updated");
+		return new ResponseEntity<Response>(response, HttpStatus.CONFLICT);
+	}
+
+	@RequestMapping(value = "/deletelabel/{labelId}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteLabel(@PathVariable long labelId, HttpServletRequest request, Response response) {
+
+		String token = request.getHeader("userid");
+		boolean flag = iLabelService.deleteLabel(token, labelId);
+
+		if (flag) {
+
+			response.setMessage("Delete label successfully");
+
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+
+		}
+		response.setMessage(" label Not deleted");
+		return new ResponseEntity<Response>(response, HttpStatus.CONFLICT);
 	}
 }

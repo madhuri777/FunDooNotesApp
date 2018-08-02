@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.notes.service.INotesService;
-import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 
 @RestController
 public class NotesController {

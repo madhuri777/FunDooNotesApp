@@ -10,4 +10,7 @@ public interface ILabelDAO {
 	long save(Labels labels);
 	Labels getLabelByName(String labelName);
 	List<Labels> getAllLabels(User user);
+	Labels getLabelsById(long labelId);
+	boolean update(Labels labels);
+	boolean delete(long labelId);
 }

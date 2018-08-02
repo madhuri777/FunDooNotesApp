@@ -76,4 +76,50 @@ public class LabelService implements ILabelService{
 		return listLabelsDTO;
 	}
 
+	@Transactional
+	@Override
+	public boolean updateLabels(long labelid, String token, LabelDTO dto) {
+		
+		long userid=JWT.parseJWT(token);
+		
+		Labels labels=labelDAO.getLabelsById(labelid);
+		
+		long labelUserId=labels.getUser().getUserId();
+		
+		
+		if(userid==labelUserId) {
+			
+			labels.setLabelName(dto.getLabelName());
+			
+			labelDAO.update(labels);
+			
+			return true;
+		}
+		
+		return true;
+	}
+
+	@Transactional
+	@Override
+	public boolean deleteLabel(String token, long labelId) {
+		
+		boolean status=false;
+		
+		long userid=JWT.parseJWT(token);
+		
+		Labels labels=labelDAO.getLabelsById(labelId);
+		
+		long labelUserId=labels.getUser().getUserId();
+		
+		if(userid==labelUserId) {
+			
+			status=labelDAO.delete(labelId);
+			
+			return status;
+			
+		}
+		
+		return status;
+	}
+
 }
