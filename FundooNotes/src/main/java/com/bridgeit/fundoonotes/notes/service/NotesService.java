@@ -69,8 +69,11 @@ public class NotesService implements INotesService {
 		System.out.println("qqqq "+user);
 		
 		List<Notes> listNote=notesDAO.getAllNotes(user);
+		System.out.println("get all note "+listNote);
 		
 		for(Notes note : listNote){
+			
+			System.out.println("notes with list "+note);
 			
 			NotesDTO notesDTO1=new NotesDTO();
 			notesDTO1.setNoteid(note.getId());
@@ -79,8 +82,9 @@ public class NotesService implements INotesService {
 			notesDTO1.setArchive(note.getArchive());
 			notesDTO1.setTrash(note.getTrash());
 			notesDTO1.setPin(note.isPin());
-			 notesDTO1.setColour(note.getColour());
-			 notesDTO1.setReminder(note.getReminder());
+			notesDTO1.setColour(note.getColour());
+			notesDTO1.setReminder(note.getReminder());
+			notesDTO1.setLabel(note.getLabel());
 			liNotesDTOs.add(notesDTO1);
 			
 		}

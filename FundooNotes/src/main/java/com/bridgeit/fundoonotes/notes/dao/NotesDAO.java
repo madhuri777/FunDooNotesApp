@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,15 +28,23 @@ public class NotesDAO implements INotesDAO{
 		return noteId;
 	}
 
-	@SuppressWarnings({ "deprecation", "unchecked" })
+	@SuppressWarnings({  "unchecked", "rawtypes" })
 	@Override
 	public List<Notes> getAllNotes(User user) {
 		 System.out.println("in notes dao method ");
 		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid", user));
-		List<Notes> noteList = criteria.list();
-		
-		System.out.println("notes dao "+noteList);
+			
+			String hql="from Notes where userid=:userid";
+			Query query = sessionFactory.getCurrentSession().createQuery(hql);
+			query.setParameter("userid",user);
+			List noteList = query.list();
+			System.out.println("dao "+noteList); 
+			
+			
+//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid", user));
+//		List<Notes> noteList = criteria.list();
+//		
+//		System.out.println("notes dao "+noteList);
 		
 		return noteList;
 	}

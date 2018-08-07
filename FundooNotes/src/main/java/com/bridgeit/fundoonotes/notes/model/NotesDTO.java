@@ -1,17 +1,14 @@
 package com.bridgeit.fundoonotes.notes.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.bridgeit.fundoonotes.labels.model.Labels;
 
 public class NotesDTO {
 
 	private long noteid;
-	public long getNoteid() {
-		return noteid;
-	}
-
-	public void setNoteid(long noteid) {
-		this.noteid = noteid;
-	}
 
 	private String title;
 	
@@ -27,8 +24,24 @@ public class NotesDTO {
 	 
 	private Date reminder;
 	
+	private Set<Labels> label=new HashSet<Labels>(); 
 	
+	public Set<Labels> getLabel() {
+		return label;
+	}
 
+	public void setLabel(Set<Labels> label) {
+		this.label = label;
+	}
+
+	public long getNoteid() {
+		return noteid;
+	}
+
+	public void setNoteid(long noteid) {
+		this.noteid = noteid;
+	}
+	
     public Date getReminder() {
 		return reminder;
 	}

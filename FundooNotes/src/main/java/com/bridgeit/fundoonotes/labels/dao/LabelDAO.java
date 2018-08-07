@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,11 +38,21 @@ public class LabelDAO implements ILabelDAO {
 	}
 
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<Labels> getAllLabels(User user) {
 		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Labels.class).add(Restrictions.eq("userid", user));
-		List<Labels> labelList = criteria.list();
+		
+
+		String hql="from Labels where userid=:userid";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("userid",user);
+		List labelList = query.list();
+		System.out.println("dao "+labelList); 
+		
+//		
+//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Labels.class).add(Restrictions.eq("userid", user));
+//		List<Labels> labelList = criteria.list();
 		
 		return labelList;
 	}

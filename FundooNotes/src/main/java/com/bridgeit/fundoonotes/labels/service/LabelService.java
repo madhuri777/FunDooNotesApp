@@ -1,7 +1,9 @@
 package com.bridgeit.fundoonotes.labels.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bridgeit.fundoonotes.labels.dao.LabelDAO;
 import com.bridgeit.fundoonotes.labels.model.LabelDTO;
 import com.bridgeit.fundoonotes.labels.model.Labels;
+import com.bridgeit.fundoonotes.notes.dao.NotesDAO;
+import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.dao.UserDao;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.utility.JWT;
@@ -22,6 +27,9 @@ public class LabelService implements ILabelService{
 	
 	@Autowired
 	LabelDAO labelDAO;
+	
+	@Autowired
+	NotesDAO noteDAO;
 	
 	@Transactional
 	@Override
@@ -121,5 +129,68 @@ public class LabelService implements ILabelService{
 		
 		return status;
 	}
+
+	@Transactional
+	@Override
+	public boolean addLabels(String token, NotesDTO noteDTO, long labelId) {
+		
+		long tokenuserid=JWT.parseJWT(token);
+		
+		Set<Labels> labelList=new HashSet<Labels>();
+		Set<Notes> noteList=new HashSet<Notes>();
+		
+		long noteid=noteDTO.getNoteid();
+		Notes note=noteDAO.getNoteById(noteid);
+		
+		long userid=note.getUserid().getUserId();
+		
+		if(tokenuserid==userid) {
+		 
+		Labels label=labelDAO.getLabelsById(labelId); 
+		 
+		labelList=note.getLabel();
+		System.out.println("labelList "+labelList);
+		labelList.add(label);
+		note.setLabel(labelList);
+		
+		noteList.add(note);
+		label.setNote(noteList);
+		
+		noteDAO.update(note);
+		labelDAO.update(label);
+		
+		
+		return true;
+	}
+		return false;
+	}
+
+	@Transactional
+	@Override
+	public boolean removeLabels(String token, NotesDTO noteDTO, long labelId) {
+		
+		long tokenuserid=JWT.parseJWT(token);
+		long noteid=noteDTO.getNoteid();
+		Notes note=noteDAO.getNoteById(noteid);
+		
+		long userid=note.getUserid().getUserId();
+		
+		if(tokenuserid==userid) {
+			
+			Set<Labels> labels=note.getLabel();
+			System.out.println("remove the labels "+labels);
+			
+			Labels label=labelDAO.getLabelsById(labelId); 
+			
+			labels.remove(label);
+			
+			Set<Notes> notes=label.getNote();
+			notes.remove(note);
+		
+		   System.out.println("after rmoving labels "+labels);
+		return true;
+	}		
+		return false;
+	}	
 
 }

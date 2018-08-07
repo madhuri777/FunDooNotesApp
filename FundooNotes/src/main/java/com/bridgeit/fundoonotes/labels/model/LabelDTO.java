@@ -16,6 +16,10 @@ public class LabelDTO {
 	public void setLabelName(String labelName) {
 		this.labelName = labelName;
 	}
+	@Override
+	public String toString() {
+		return "LabelDTO [labelId=" + labelId + ", labelName=" + labelName + "]";
+	}
 	
 	
 }

@@ -45,8 +45,11 @@ public class NotesController {
 		
 		List<NotesDTO> list=iNotesService.getAllNotes(token);
 		System.out.println(" controller for getLakk records "+list); 
+		if(list!=null) {
+			return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.OK);
+		}
 		
-		return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.OK);
+		return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.CONFLICT);
 	}
 	
 	@RequestMapping(value="/updatenotes/{id}",method=RequestMethod.PUT)

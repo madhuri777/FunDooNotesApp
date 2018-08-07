@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Notes {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private User userid;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL ,fetch = FetchType.EAGER)
 	private Set<Labels> label=new HashSet<Labels>();
 	
 	@Column
@@ -72,6 +73,7 @@ public class Notes {
 	    this.createdDate=new Date();
 	    this.modifiedDate=createdDate;
 	    this.colour=dto.getColour();
+	    this.label=dto.getLabel();
 	}
 	
 	public boolean isPin() {
@@ -145,6 +147,13 @@ public class Notes {
 	}
 	public void setLabel(Set<Labels> label) {
 		this.label = label;
+	}
+	@Override
+	public String toString() {
+		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
+				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
+				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
+				+ "]";
 	}
 	
 	

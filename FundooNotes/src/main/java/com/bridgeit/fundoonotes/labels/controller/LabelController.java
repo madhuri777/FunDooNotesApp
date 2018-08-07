@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoonotes.labels.model.LabelDTO;
 import com.bridgeit.fundoonotes.labels.service.ILabelService;
+import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.model.Response;
 
 @RestController
@@ -81,5 +82,27 @@ public class LabelController {
 		}
 		response.setMessage(" label Not deleted");
 		return new ResponseEntity<Response>(response, HttpStatus.CONFLICT);
+	}
+	@RequestMapping(value="/addlabels/{labelid}",method=RequestMethod.POST)
+	public ResponseEntity<?> addLabel(HttpServletRequest request,Response response, @RequestBody NotesDTO note, @PathVariable long labelid){
+
+		String token=request.getHeader("userid");
+		boolean flag=iLabelService.addLabels(token, note, labelid);
+		if(flag) {
+		response.setMessage("Added Suuccessfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+		response.setMessage("Not Added Suucfully");
+		return new ResponseEntity<Response>(response,HttpStatus.CONFLICT);
+	}		
+	
+	@RequestMapping(value="/removelabels/{labelId}",method=RequestMethod.POST)
+	public ResponseEntity<?> removeLabels(HttpServletRequest request,Response response,@RequestBody NotesDTO notedto,@PathVariable long labelId){
+		
+		String token=request.getHeader("userid");
+		boolean flag=iLabelService.removeLabels(token, notedto, labelId);
+		System.out.println("controller of remove labels "+flag);
+		
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
 }
