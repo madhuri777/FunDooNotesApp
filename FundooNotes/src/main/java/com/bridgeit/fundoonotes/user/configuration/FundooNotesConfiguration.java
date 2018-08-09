@@ -36,6 +36,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -212,7 +213,7 @@ public class FundooNotesConfiguration {
 	   return new NotesDTO();
    }
 
-//-------------------------------------------------Cors Connection------------------------------
+//-------------------------------------------------Cors Connection------------------------------------------
 
    @Bean
    public WebMvcConfigurer corsConfigurer() {
@@ -223,5 +224,13 @@ public class FundooNotesConfiguration {
            }
        };
    }
+ 
+//------------------------------------------------File Upload-----------------------------------------------   
    
+   @Bean(name = "multipartResolver")
+   public CommonsMultipartResolver multipartResolver() {
+       CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+       multipartResolver.setMaxUploadSize(200000);
+       return multipartResolver;
+   }
 }

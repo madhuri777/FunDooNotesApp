@@ -1,5 +1,8 @@
 package com.bridgeit.fundoonotes.notes.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.notes.service.INotesService;
@@ -75,5 +81,32 @@ public class NotesController {
 			return new ResponseEntity<String>("note deleted successfully",HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("this id's note not present ",HttpStatus.CONFLICT);
+	}
+	
+	@RequestMapping(value="/upload", method=RequestMethod.POST)
+    public ResponseEntity<?> handleFileUpload( 
+            @RequestParam("file") MultipartFile file){
+		String filename=file.getOriginalFilename();
+		System.out.println("file name "+filename);
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream = 
+                        new BufferedOutputStream(new FileOutputStream(new File("/home/bridgeit/eclipse-workspace-FundoApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/"+filename )));
+                stream.write(bytes);
+                stream.close();
+                return new ResponseEntity<String>("You successfully uploaded " + filename + " into " + filename + "-uploaded !",HttpStatus.ACCEPTED);
+            } catch (Exception e) {
+                return new ResponseEntity<String>("You failed to upload " + filename + " => " + e.getMessage(),HttpStatus.CONFLICT);
+            }
+        } else {
+            return new ResponseEntity<String>("http://localhost:8080/FundooNotes/image/" + filename + " because the file was empty.",HttpStatus.CONFLICT);
+        }
+    }
+	
+	@RequestMapping(value="/image/{filename}")
+	public ResponseEntity<?> getFileImage(@PathVariable String imageName){
+		System.out.println("image name "+imageName);
+		return new ResponseEntity<String>("",HttpStatus.OK);
 	}
 }
