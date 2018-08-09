@@ -12,12 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
 import com.bridgeit.fundoonotes.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="notes")
@@ -30,7 +32,9 @@ public class Notes {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private User userid;
 	
+	@JsonIgnore
 	@ManyToMany(cascade=CascadeType.ALL ,fetch = FetchType.EAGER)
+	//@JoinTable(name="notelabel",joinColumns= {@JoinColumn(name="labelId")},inverseJoinColumns= {@JoinColumn(name="id")})
 	private Set<Labels> label=new HashSet<Labels>();
 	
 	@Column

@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -31,12 +29,13 @@ public class Labels {
 	@Column
 	private String labelName;
 	
-	@JsonIgnore
-	@ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinTable(name="label_notes",joinColumns= {@JoinColumn(name="labelId")},inverseJoinColumns= {@JoinColumn(name="id")})
+	
+	@ManyToMany(mappedBy="label",fetch = FetchType.EAGER)
+//	@JoinTable(name="label_notes",joinColumns= {@JoinColumn(name="labelId")},inverseJoinColumns= {@JoinColumn(name="id")})
 	private Set<Notes> note=new HashSet<Notes>();
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
+	@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private User userid;
 	
 	public long getLabelId() {
@@ -69,6 +68,6 @@ public class Labels {
 //		return "Labels [labelId=" + labelId + ", labelName=" + labelName + ", note=" + note + ", userid=" + userid
 //				+ "]";
 //	}
-	
+//	
 	
 }

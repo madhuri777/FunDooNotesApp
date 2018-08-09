@@ -140,24 +140,31 @@ public class LabelService implements ILabelService{
 		Set<Notes> noteList=new HashSet<Notes>();
 		
 		long noteid=noteDTO.getNoteid();
+		
 		Notes note=noteDAO.getNoteById(noteid);
+		
+		System.out.println("note in add label "+note);
 		
 		long userid=note.getUserid().getUserId();
 		
 		if(tokenuserid==userid) {
 		 
 		Labels label=labelDAO.getLabelsById(labelId); 
+		
+		System.out.println("label in add label method "+label);
+		noteList=label.getNote();
+		noteList.add(note);
+		label.setNote(noteList);
 		 
+		labelDAO.update(label);
+		
 		labelList=note.getLabel();
 		System.out.println("labelList "+labelList);
 		labelList.add(label);
 		note.setLabel(labelList);
 		
-		noteList.add(note);
-		label.setNote(noteList);
-		
 		noteDAO.update(note);
-		labelDAO.update(label);
+		
 		
 		
 		return true;
@@ -183,9 +190,9 @@ public class LabelService implements ILabelService{
 			Labels label=labelDAO.getLabelsById(labelId); 
 			
 			labels.remove(label);
+			note.setLabel(labels);
+			noteDAO.update(note);
 			
-			Set<Notes> notes=label.getNote();
-			notes.remove(note);
 		
 		   System.out.println("after rmoving labels "+labels);
 		return true;
