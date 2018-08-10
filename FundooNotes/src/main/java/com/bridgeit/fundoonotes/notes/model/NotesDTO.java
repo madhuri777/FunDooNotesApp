@@ -24,6 +24,16 @@ public class NotesDTO {
 	 
 	private Date reminder;
 	
+	private String image;
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	private Set<Labels> label=new HashSet<Labels>(); 
 	
 	public Set<Labels> getLabel() {

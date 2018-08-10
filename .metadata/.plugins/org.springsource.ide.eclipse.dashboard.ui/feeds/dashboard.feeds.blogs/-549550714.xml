@@ -5,7 +5,38 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-09T12:16:43Z</updated>
+  <updated>2018-08-09T18:22:38Z</updated>
+  <entry>
+    <title>Spring Cloud Skipper 1.1.0.M1</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/09/spring-cloud-skipper-1-1-0-m1" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Ilayaperumal Gopinathan</name>
+    </author>
+    <id>tag:spring.io,2018-08-09:3358</id>
+    <updated>2018-08-09T18:22:38Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;We are pleased to announce the release of Spring Cloud Skipper 1.1.0.M1&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Cloud Skipper is a lightweight tool that allows you to discover Spring Boot applications and manage their lifecycle on multiple Cloud Platforms. You can use Skipper standalone or integrate it with Continuous Integration pipelines to help implement the practice of Continuous Deployment.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://docs.spring.io/spring-cloud-skipper/docs/1.1.0.M1/reference/htmlsingle/#getting-started"&gt;getting started section&lt;/a&gt; in the reference guide is the best place to start kicking the tires.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Focus on Cloud Foundry manifest:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This milestone release adds a new feature to perform the lifecycle operations to install, upgrade, rollback and delete on any applications that can be deployed into Cloud Foundry using the Cloud Foundry &lt;code&gt;manifest&lt;/code&gt; format.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;To do this, we are introducing a new "kind" with the name &lt;code&gt;CloudFoundryApplication&lt;/code&gt; as a specification, which can include Cloud Foundry manifest entries as mentioned &lt;a href="https://docs.spring.io/spring-cloud-skipper/docs/1.1.0.M1/reference/htmlsingle/#package-templates-cf"&gt;here&lt;/a&gt;. These manifest entries can be overridden during install/upgrade operations. Check out these &lt;a href="https://docs.spring.io/spring-cloud-skipper/docs/1.1.0.M1/reference/htmlsingle/#tour-cf-manifest"&gt;examples&lt;/a&gt; to learn more about how Cloud Foundry manifest based packages are managed in Skipper.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Please reach out on &lt;a href="https://github.com/spring-cloud/spring-cloud-skipper/issues"&gt;GitHub Issues&lt;/a&gt;, &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-skipper"&gt;Stack Overflow&lt;/a&gt;, and the &lt;a href="https://gitter.im/spring-cloud/spring-cloud-skipper"&gt;Gitter channel&lt;/a&gt; with questions, feedback or contributions.&lt;/p&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Spring Cloud for Google Cloud Platform 1.0 goes GA!</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/09/spring-cloud-for-google-cloud-platform-1-0-goes-ga" />
@@ -1222,18 +1253,5 @@ The &lt;code&gt;HttpSessionRequestCache&lt;/code&gt; has been updated to no long
 &lt;a href="http://docs.spring.io/spring-security/site/docs/5.0.x/reference/htmlsingle/"&gt;Reference&lt;/a&gt;
 | &lt;a href="http://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Framework 5.0.8 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/07/26/spring-framework-5-0-8-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Stéphane Nicoll</name>
-    </author>
-    <id>tag:spring.io,2018-07-26:3339</id>
-    <updated>2018-07-26T19:38:18Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the team, I am pleased to announce that Spring Framework 5.0.8 &lt;a href="http://projects.spring.io/spring-framework"&gt;is available now&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Spring Framework 5.0.8 &lt;a href="https://jira.spring.io/secure/ReleaseNote.jspa?projectId=10000&amp;version=16855"&gt;includes 40 fixes and selected improvements&lt;/a&gt; and is the base for the upcoming Spring Boot 2.0.4 release next week.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://spring.io/projects/spring-framework"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-framework"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/SPR"&gt;Issues&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-framework/docs/5.0.8.RELEASE/spring-framework-reference"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

@@ -34,7 +34,6 @@ public class Notes {
 	
 	@JsonIgnore
 	@ManyToMany(cascade=CascadeType.ALL ,fetch = FetchType.EAGER)
-	//@JoinTable(name="notelabel",joinColumns= {@JoinColumn(name="labelId")},inverseJoinColumns= {@JoinColumn(name="id")})
 	private Set<Labels> label=new HashSet<Labels>();
 	
 	@Column
@@ -63,6 +62,10 @@ public class Notes {
 	
 	@Column
 	private boolean pin=false;
+	
+	@Column
+	private String image;
+	
 	
 	public Notes() {
 		
@@ -152,13 +155,21 @@ public class Notes {
 	public void setLabel(Set<Labels> label) {
 		this.label = label;
 	}
-	@Override
-	public String toString() {
-		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
-				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
-				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
-				+ "]";
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
+	
+//	@Override
+//	public String toString() {
+//		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
+//				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
+//				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
+//				+ "]";
+//	}
+//	
 	
 }

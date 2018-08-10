@@ -1,10 +1,15 @@
 package com.bridgeit.fundoonotes.notes.service;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +24,7 @@ import com.bridgeit.fundoonotes.user.utility.JWT;
 @Service
 public class NotesService implements INotesService {
 
-//	Notes notes;
+	private final Path rootLocation = Paths.get("/home/bridgeit/eclipse-workspace-FundoApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/");
 	
 	
 	@Autowired
@@ -122,6 +127,7 @@ public class NotesService implements INotesService {
             note.setTrash(notes.getTrash());
             note.setModifiedDate(notes.getModifiedDate());
             note.setReminder(notes.getReminder());
+            note.setImage(notes.getImage());
             
             notesDAO.update(note);
 			
@@ -147,6 +153,20 @@ public class NotesService implements INotesService {
 			return status;
 		}
 		return status;
+	}
+	
+	public Resource loadFile(String filename) {
+		try {
+			Path file = rootLocation.resolve(filename);
+			Resource resource = new UrlResource(file.toUri());
+			if (resource.exists() || resource.isReadable()) {
+				return resource;
+			} else {
+				throw new RuntimeException("FAIL!");
+			}
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("FAIL!");
+		}
 	}
 
 }
