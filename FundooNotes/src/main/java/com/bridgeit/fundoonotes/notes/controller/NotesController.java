@@ -64,6 +64,7 @@ public class NotesController {
 	@RequestMapping(value="/updatenotes/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<String> updateNotes(@PathVariable("id") long id,@RequestBody NotesDTO dto,HttpServletRequest request){
 		String token=request.getHeader("userid");
+		System.out.println("note come for update "+dto.getImage());
 		boolean status=iNotesService.update(id, token,dto);
 		if(status) {
 			return new ResponseEntity<String>("updated Note ",HttpStatus.OK);

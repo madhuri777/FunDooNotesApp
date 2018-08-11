@@ -118,6 +118,13 @@ public class NotesDTO {
 	public void setPin(boolean pin) {
 		this.pin = pin;
 	}
+
+	@Override
+	public String toString() {
+		return "NotesDTO [noteid=" + noteid + ", title=" + title + ", discription=" + discription + ", archive="
+				+ archive + ", trash=" + trash + ", pin=" + pin + ", colour=" + colour + ", reminder=" + reminder
+				+ ", image=" + image + ", label=" + label + "]";
+	}
 	 
 	
 }

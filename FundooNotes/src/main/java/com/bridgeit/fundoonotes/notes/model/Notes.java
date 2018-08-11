@@ -81,6 +81,7 @@ public class Notes {
 	    this.modifiedDate=createdDate;
 	    this.colour=dto.getColour();
 	    this.label=dto.getLabel();
+	    this.image=dto.getImage();
 	}
 	
 	public boolean isPin() {
@@ -161,15 +162,14 @@ public class Notes {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	@Override
+	public String toString() {
+		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
+				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
+				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
+				+ ", image=" + image + "]";
+	}
 	
 	
-//	@Override
-//	public String toString() {
-//		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
-//				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
-//				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
-//				+ "]";
-//	}
-//	
 	
 }

@@ -78,8 +78,6 @@ public class NotesService implements INotesService {
 		
 		for(Notes note : listNote){
 			
-			System.out.println("notes with list "+note);
-			
 			NotesDTO notesDTO1=new NotesDTO();
 			notesDTO1.setNoteid(note.getId());
 			notesDTO1.setTitle(note.getTitle());
@@ -90,11 +88,11 @@ public class NotesService implements INotesService {
 			notesDTO1.setColour(note.getColour());
 			notesDTO1.setReminder(note.getReminder());
 			notesDTO1.setLabel(note.getLabel());
+			notesDTO1.setImage(note.getImage());
+			
 			liNotesDTOs.add(notesDTO1);
 			
 		}
-		System.out.println("after dao in service ");
-		
 		return  liNotesDTOs;
 	}
 
@@ -102,23 +100,19 @@ public class NotesService implements INotesService {
 	@Transactional
 	public boolean update(long id, String token,NotesDTO dto)throws DataBaseException {
 		
-		//long noteid=dto.getNoteid();
-		
-		System.out.println("note "+id);
-		
 		Notes note=notesDAO.getNoteById(id);
 		
 		long userid=note.getUserid().getUserId();
-		System.out.println("userid "+userid);
 		
 		long tokenid=JWT.parseJWT(token);
 		
 		if(userid==tokenid) {
 			
-			
+			//passing DTO data in constructor of Notes
 			Notes notes=new Notes(dto);
             notes.setModifiedDate(new Date());
 			
+            //Again setting NewNote data into Old database's Note
             note.setTitle(notes.getTitle());
             note.setDiscription(notes.getDiscription());
             note.setArchive(notes.getArchive());
@@ -127,9 +121,10 @@ public class NotesService implements INotesService {
             note.setTrash(notes.getTrash());
             note.setModifiedDate(notes.getModifiedDate());
             note.setReminder(notes.getReminder());
-            note.setImage(notes.getImage());
+            note.setImage(dto.getImage());
             
             notesDAO.update(note);
+            System.out.println("upadted note "+note);
 			
 			return true;
 		}
