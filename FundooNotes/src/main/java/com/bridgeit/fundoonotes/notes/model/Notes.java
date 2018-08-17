@@ -12,9 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
@@ -22,154 +22,182 @@ import com.bridgeit.fundoonotes.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="notes")
+@Table(name = "notes")
 public class Notes {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@ManyToOne(cascade=CascadeType.ALL)
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	private User userid;
-	
+
 	@JsonIgnore
-	@ManyToMany(cascade=CascadeType.ALL ,fetch = FetchType.EAGER)
-	private Set<Labels> label=new HashSet<Labels>();
-	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Labels> label = new HashSet<Labels>();
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<User> shareTo = new HashSet<User>();
+
 	@Column
 	private Date createdDate;
-	
+
 	@Column
 	private Date modifiedDate;
-	
+
 	@Column
 	private Date reminder;
-	
+
 	@Column
 	private String title;
-	
+
 	@Column
 	private String discription;
-	
+
 	@Column
-	private String colour="white";
-	
+	private String colour = "white";
+
 	@Column
-	private boolean archive=false;
-	
+	private boolean archive = false;
+
 	@Column
-	private boolean trash=false;
-	
+	private boolean trash = false;
+
 	@Column
-	private boolean pin=false;
-	
+	private boolean pin = false;
+
 	@Column
 	private String image;
-	
-	
+
 	public Notes() {
-		
+
 	}
+
 	public Notes(NotesDTO dto) {
-		this.title=dto.getTitle();
-		this.discription=dto.getDiscription();
-	    this.archive=dto.isArchive();
-	    this.trash=dto.isTrash();
-	    this.pin=dto.isPin();
-	    this.reminder=dto.getReminder();
-	    this.createdDate=new Date();
-	    this.modifiedDate=createdDate;
-	    this.colour=dto.getColour();
-	    this.label=dto.getLabel();
-	    this.image=dto.getImage();
+		this.title = dto.getTitle();
+		this.discription = dto.getDiscription();
+		this.archive = dto.isArchive();
+		this.trash = dto.isTrash();
+		this.pin = dto.isPin();
+		this.reminder = dto.getReminder();
+		this.createdDate = new Date();
+		this.modifiedDate = createdDate;
+		this.colour = dto.getColour();
+		this.label = dto.getLabel();
+		this.image = dto.getImage();
 	}
-	
+
+	public Set<User> getShareTo() {
+		return shareTo;
+	}
+
+	public void setShareTo(Set<User> shareTo) {
+		this.shareTo = shareTo;
+	}
+
 	public boolean isPin() {
 		return pin;
 	}
+
 	public void setPin(boolean pin) {
 		this.pin = pin;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
+
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public User getUserid() {
 		return userid;
 	}
+
 	public void setUserid(User userid) {
 		this.userid = userid;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getDiscription() {
 		return discription;
 	}
+
 	public void setDiscription(String discription) {
 		this.discription = discription;
 	}
+
 	public String getColour() {
 		return colour;
 	}
+
 	public void setColour(String colour) {
 		this.colour = colour;
 	}
+
 	public boolean getArchive() {
 		return archive;
 	}
+
 	public void setArchive(boolean archive) {
 		this.archive = archive;
 	}
+
 	public boolean getTrash() {
 		return trash;
 	}
+
 	public void setTrash(boolean trash) {
 		this.trash = trash;
 	}
+
 	public Date getReminder() {
 		return reminder;
 	}
+
 	public void setReminder(Date reminder) {
 		this.reminder = reminder;
 	}
+
 	public Set<Labels> getLabel() {
 		return label;
 	}
+
 	public void setLabel(Set<Labels> label) {
 		this.label = label;
 	}
+
 	public String getImage() {
 		return image;
 	}
+
 	public void setImage(String image) {
 		this.image = image;
 	}
-	@Override
-	public String toString() {
-		return "Notes [id=" + id + ", userid=" + userid + ", label=" + label + ", createdDate=" + createdDate
-				+ ", modifiedDate=" + modifiedDate + ", reminder=" + reminder + ", title=" + title + ", discription="
-				+ discription + ", colour=" + colour + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
-				+ ", image=" + image + "]";
-	}
-	
-	
-	
+
 }

@@ -152,8 +152,11 @@ public class LabelService implements ILabelService{
 		Labels label=labelDAO.getLabelsById(labelId); 
 		
 		System.out.println("label in add label method "+label);
+		
 		noteList=label.getNote();
+		
 		noteList.add(note);
+		
 		label.setNote(noteList);
 		 
 		labelDAO.update(label);

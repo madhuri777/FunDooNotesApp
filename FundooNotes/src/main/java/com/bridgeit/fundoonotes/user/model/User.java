@@ -82,4 +82,11 @@ public class User {
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", phoneNumber=" + phoneNumber + ", isVerified=" + isVerified + "]";
+	}
+	
 }

@@ -31,6 +31,7 @@ public class NotesDAO implements INotesDAO{
 	@SuppressWarnings({  "unchecked", "rawtypes" })
 	@Override
 	public List<Notes> getAllNotes(User user) {
+		
 		 System.out.println("in notes dao method ");
 		
 			
@@ -67,7 +68,7 @@ public class NotesDAO implements INotesDAO{
 		
 		sessionFactory.getCurrentSession().update(notes);
 		
-		return false;
+		return true;
 	}
 
 	@Override
@@ -79,6 +80,26 @@ public class NotesDAO implements INotesDAO{
 			return true;
 		}else
 			throw new DataBaseException("Exception: Row not deleted");
+	}
+	
+   @Override
+	public List<Notes> getAllCollaboratorNotes(User user) {
+		 System.out.println("in notes dao method ");
+		
+			
+			String hql="from Notes where shareTo_userId=:shareTo";
+			Query query = sessionFactory.getCurrentSession().createQuery(hql);
+			query.setParameter("shareTo",user);
+			List noteList = query.list();
+			System.out.println("dao "+noteList.toString()); 
+			
+			
+//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid", user));
+//		List<Notes> noteList = criteria.list();
+//		
+//		System.out.println("notes dao "+noteList);
+		
+		return noteList;
 	}
 
 }

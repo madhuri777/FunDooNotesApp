@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.notes.service.INotesService;
 import com.bridgeit.fundoonotes.user.model.Response;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 
 @RestController
 public class NotesController {
@@ -120,6 +120,36 @@ public class NotesController {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
-		//return new ResponseEntity<String>("image get "+filename,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="addcollaborator/{useremail:.+}",method=RequestMethod.POST)
+	public ResponseEntity<?> collaborator(@PathVariable String useremail,@RequestBody NotesDTO dto, HttpServletRequest request){
+		
+		System.out.println("email for collaborator "+useremail);
+		boolean flag=iNotesService.collaborator(useremail,dto);
+		
+		Response response=new Response();
+		
+		if(flag) {
+			response.setMessage("succesfully collaborated");
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		response.setMessage("Not set collaboratedc succsfully ");
+		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+	}
+	
+	
+	@RequestMapping(value="/getallcollabortornotes",method=RequestMethod.GET)
+	public ResponseEntity<List<NotesDTO>> getAllCollaboratorNotes(HttpServletRequest request){
+		
+		String token=request.getHeader("userid");
+		
+		List<NotesDTO> list=iNotesService.getAllCollaboratorNotes(token);
+		System.out.println(" controller for getLakk records "+list); 
+		if(list!=null) {
+			return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.CONFLICT);
 	}
 }

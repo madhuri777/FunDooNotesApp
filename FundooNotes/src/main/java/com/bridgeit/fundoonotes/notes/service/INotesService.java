@@ -13,4 +13,6 @@ public interface INotesService {
 	boolean update(long id,String token,NotesDTO dto);
 	boolean delete(long id,String token);
 	Resource loadFile(String fileName);
+	boolean collaborator(String email,NotesDTO dto);
+	List<NotesDTO> getAllCollaboratorNotes(String token);
 }

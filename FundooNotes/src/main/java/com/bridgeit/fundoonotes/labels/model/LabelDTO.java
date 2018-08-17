@@ -4,6 +4,7 @@ public class LabelDTO {
 
 	private long labelId;
 	private String labelName;
+	
 	public long getLabelId() {
 		return labelId;
 	}

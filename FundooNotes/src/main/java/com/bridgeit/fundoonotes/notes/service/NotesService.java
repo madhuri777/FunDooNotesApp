@@ -5,7 +5,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,6 +21,7 @@ import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.user.dao.UserDao;
 import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 import com.bridgeit.fundoonotes.user.utility.JWT;
 
 @Service
@@ -64,9 +67,8 @@ public class NotesService implements INotesService {
 	@Transactional
 	public List<NotesDTO> getAllNotes(String token) {
 		
-		System.out.println("sssss notes service "+token);
-		
 		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
+		
 		long id=JWT.parseJWT(token);
 		
 		User user=userDao.getUserById(id);
@@ -74,9 +76,43 @@ public class NotesService implements INotesService {
 		System.out.println("qqqq "+user);
 		
 		List<Notes> listNote=notesDAO.getAllNotes(user);
+		
+		List<User> listUser=new ArrayList<User>();
+		
 		System.out.println("get all note "+listNote);
 		
-		for(Notes note : listNote){
+		Set<UserDTO> listOfShareTO=new HashSet<>();
+		
+		
+		List<Notes> listNotes=notesDAO.getAllCollaboratorNotes(user);
+		
+		System.out.println("collaborator notes "+listNotes);
+		
+//		
+//		for(Notes note : listNote){
+//			
+//			NotesDTO notesDTO1=new NotesDTO();
+//			notesDTO1.setNoteid(note.getId());
+//			notesDTO1.setTitle(note.getTitle());
+//			notesDTO1.setDiscription(note.getDiscription());
+//			notesDTO1.setArchive(note.getArchive());
+//			notesDTO1.setTrash(note.getTrash());
+//			notesDTO1.setPin(note.isPin());
+//			notesDTO1.setColour(note.getColour());
+//			notesDTO1.setReminder(note.getReminder());
+//			notesDTO1.setLabel(note.getLabel());
+//			notesDTO1.setImage(note.getImage());
+//			
+//			//listUser=(List<User>) note.getShareTo(); getAllUserList()
+//			listOfShareTO=getAllUserList(note.getShareTo());
+//			
+//			notesDTO1.setshareTo(listOfShareTO);
+//			
+//			liNotesDTOs.add(notesDTO1);
+//			
+//		}
+		
+		for(Notes note : listNotes){
 			
 			NotesDTO notesDTO1=new NotesDTO();
 			notesDTO1.setNoteid(note.getId());
@@ -90,10 +126,36 @@ public class NotesService implements INotesService {
 			notesDTO1.setLabel(note.getLabel());
 			notesDTO1.setImage(note.getImage());
 			
+			//listUser=(List<User>) note.getShareTo(); getAllUserList()
+			listOfShareTO=getAllUserList(note.getShareTo());
+			
+			notesDTO1.setshareTo(listOfShareTO);
+			
 			liNotesDTOs.add(notesDTO1);
 			
 		}
 		return  liNotesDTOs;
+	}
+	
+	public Set<UserDTO> getAllUserList(Set<User> list){
+		
+		Set<UserDTO> listUser=new HashSet<>();
+		
+		System.out.println("list "+list);
+		
+		for(User usr:list) {
+			
+			UserDTO dto=new UserDTO();
+			
+			dto.setEmailId(usr.getEmail());
+			dto.setUserId(usr.getUserId());
+			dto.setUsername(usr.getName());
+			
+			listUser.add(dto);
+			
+		}
+		
+		return listUser;
 	}
 
 	@Override
@@ -124,6 +186,7 @@ public class NotesService implements INotesService {
             note.setImage(dto.getImage());
             
             notesDAO.update(note);
+            
             System.out.println("upadted note "+note);
 			
 			return true;
@@ -162,6 +225,81 @@ public class NotesService implements INotesService {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("FAIL!");
 		}
+	}
+
+	@Transactional
+	@Override
+	public boolean collaborator(String email,NotesDTO dto) {
+		
+		boolean status=false;
+		
+		Set<User> listOfUser=new HashSet<User>();
+		
+		Notes notes=notesDAO.getNoteById(dto.getNoteid());
+			
+		User user=userDao.isExist(email);
+		
+		if(user!=null) {
+			
+			//listOfUser.add(user);
+			
+			//notes.setShareTo(listOfUser);
+			listOfUser=notes.getShareTo();
+			
+			listOfUser.add(user);
+			
+			notes.setShareTo(listOfUser);
+			status=notesDAO.update(notes);
+			
+			System.out.println("value of status "+status );
+			
+			return status;
+		}
+		
+		return status;
+		
+		
+	}
+	
+	@Override
+	@Transactional
+	public List<NotesDTO> getAllCollaboratorNotes(String token) {
+		
+		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
+		
+		long id=JWT.parseJWT(token);
+		
+		User user=userDao.getUserById(id);
+		
+		List<Notes> listNote=notesDAO.getAllNotes(user);
+		
+		List<User> listUser=new ArrayList<User>();
+		
+		System.out.println("get all note "+listNote);
+		
+		for(Notes note : listNote){
+			
+			NotesDTO notesDTO1=new NotesDTO();
+			notesDTO1.setNoteid(note.getId());
+			notesDTO1.setTitle(note.getTitle());
+			notesDTO1.setDiscription(note.getDiscription());
+			notesDTO1.setArchive(note.getArchive());
+			notesDTO1.setTrash(note.getTrash());
+			notesDTO1.setPin(note.isPin());
+			notesDTO1.setColour(note.getColour());
+			notesDTO1.setReminder(note.getReminder());
+			notesDTO1.setLabel(note.getLabel());
+			notesDTO1.setImage(note.getImage());
+			
+			//listUser=(List<User>) note.getShareTo();
+			
+			
+			//notesDTO1.setshareTo(note.getShareTo());
+			
+			liNotesDTOs.add(notesDTO1);
+			
+		}
+		return  liNotesDTOs;
 	}
 
 }

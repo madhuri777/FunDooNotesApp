@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
+import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 
 public class NotesDTO {
 
@@ -26,6 +28,16 @@ public class NotesDTO {
 	
 	private String image;
 	
+	private Set<UserDTO> shareTo;
+	
+	public Set<UserDTO> getshareTo() {
+		return shareTo;
+	}
+
+	public void setshareTo(Set<UserDTO> shareTo) {
+		this.shareTo = shareTo;
+	}
+
 	public String getImage() {
 		return image;
 	}

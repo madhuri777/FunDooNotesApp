@@ -32,11 +32,15 @@ public class UserDao implements IUserDao {
 	@SuppressWarnings({ "deprecation" })
 	@Override
 	public User isExist(String email) {
+		System.out.println("email id in is Exist method "+email); 
+		
 
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class)
 				.add(Restrictions.eq("email", email));
 		User user2 = (User) criteria.uniqueResult();
 
+		System.out.println("user for collaborator in dao "+user2); 
+	
 		return user2 != null ? user2 : null;
 	}
 

@@ -31,7 +31,6 @@ public class Labels {
 	
 	
 	@ManyToMany(mappedBy="label",fetch = FetchType.EAGER)
-//	@JoinTable(name="label_notes",joinColumns= {@JoinColumn(name="labelId")},inverseJoinColumns= {@JoinColumn(name="id")})
 	private Set<Notes> note=new HashSet<Notes>();
 	
 	@JsonIgnore

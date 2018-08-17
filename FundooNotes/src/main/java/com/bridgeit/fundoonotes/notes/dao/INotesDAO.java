@@ -12,4 +12,5 @@ public interface INotesDAO {
 	Notes getNoteById(long noteid);
 	boolean update(Notes notes);
 	boolean deletNoteById(long id);
+	List<Notes> getAllCollaboratorNotes(User user);
 }
