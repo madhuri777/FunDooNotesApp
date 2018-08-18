@@ -1,10 +1,13 @@
 package com.bridgeit.fundoonotes.notes.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.core.io.Resource;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 
 public interface INotesService {
 
@@ -14,5 +17,5 @@ public interface INotesService {
 	boolean delete(long id,String token);
 	Resource loadFile(String fileName);
 	boolean collaborator(String email,NotesDTO dto);
-	List<NotesDTO> getAllCollaboratorNotes(String token);
+	Set<UserDTO> getAllUserList(Set<User> list);
 }

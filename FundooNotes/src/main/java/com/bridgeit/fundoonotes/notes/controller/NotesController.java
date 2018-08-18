@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
 import com.bridgeit.fundoonotes.notes.service.INotesService;
 import com.bridgeit.fundoonotes.user.model.Response;
-import com.bridgeit.fundoonotes.user.model.UserDTO;
 
 @RestController
 public class NotesController {
@@ -138,18 +137,4 @@ public class NotesController {
 		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
 	}
 	
-	
-	@RequestMapping(value="/getallcollabortornotes",method=RequestMethod.GET)
-	public ResponseEntity<List<NotesDTO>> getAllCollaboratorNotes(HttpServletRequest request){
-		
-		String token=request.getHeader("userid");
-		
-		List<NotesDTO> list=iNotesService.getAllCollaboratorNotes(token);
-		System.out.println(" controller for getLakk records "+list); 
-		if(list!=null) {
-			return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.OK);
-		}
-		
-		return new ResponseEntity<List<NotesDTO>>(list,HttpStatus.CONFLICT);
-	}
 }

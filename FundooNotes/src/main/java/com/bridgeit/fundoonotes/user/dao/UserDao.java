@@ -1,5 +1,8 @@
 package com.bridgeit.fundoonotes.user.dao;
 
+import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,6 +62,17 @@ public class UserDao implements IUserDao {
 				.add(Restrictions.eq("userId", id));
 		User user2 = (User) criteria.uniqueResult();
 		return user2;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getAllUsers() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+		List<User> listOfUsers= criteria.list();
+		
+		System.out.println("List of usrs in dao "+listOfUsers.toString());
+		
+		return listOfUsers;
 	}
 
 }

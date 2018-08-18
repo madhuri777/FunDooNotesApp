@@ -15,11 +15,11 @@ import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
 
 @Repository
-public class NotesDAO implements INotesDAO{
+public class NotesDAO implements INotesDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public long save(Notes notes) {
 		System.out.println("save naote successfully");
@@ -28,77 +28,72 @@ public class NotesDAO implements INotesDAO{
 		return noteId;
 	}
 
-	@SuppressWarnings({  "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Notes> getAllNotes(User user) {
-		
-		 System.out.println("in notes dao method ");
-		
-			
-			String hql="from Notes where userid=:userid";
-			Query query = sessionFactory.getCurrentSession().createQuery(hql);
-			query.setParameter("userid",user);
-			List noteList = query.list();
-			System.out.println("dao "+noteList); 
-			
-			
-//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid", user));
-//		List<Notes> noteList = criteria.list();
-//		
-//		System.out.println("notes dao "+noteList);
-		
+
+		System.out.println("in notes dao method ");
+
+		String hql = "from Notes where userid=:userid";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("userid", user);
+		List noteList = query.list();
+		System.out.println("dao " + noteList);
+
+		// Criteria criteria =
+		// sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid",
+		// user));
+		// List<Notes> noteList = criteria.list();
+		//
+		// System.out.println("notes dao "+noteList);
+
 		return noteList;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Notes getNoteById(long noteid)throws DataBaseException {
-		
-		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("id",noteid));
-		Notes notes= (Notes) criteria.uniqueResult();
-		
-		if(notes!=null) {
+	public Notes getNoteById(long noteid) throws DataBaseException {
+
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class)
+				.add(Restrictions.eq("id", noteid));
+		Notes notes = (Notes) criteria.uniqueResult();
+
+		if (notes != null) {
 			return notes;
-		}else
+		} else
 			throw new DataBaseException("Exception: NullPointer Exception, Note does not exists");
 	}
 
 	@Override
 	public boolean update(Notes notes) {
-		
+
 		sessionFactory.getCurrentSession().update(notes);
-		
+
 		return true;
 	}
 
 	@Override
-	public boolean deletNoteById(long id)throws DataBaseException {
-		System.out.println("note id "+id);
-		int result=sessionFactory.getCurrentSession().createQuery("delete from Notes where id=:id").setParameter("id",id).executeUpdate();
+	public boolean deletNoteById(long id) throws DataBaseException {
+		System.out.println("note id " + id);
+		int result = sessionFactory.getCurrentSession().createQuery("delete from Notes where id=:id")
+				.setParameter("id", id).executeUpdate();
 		System.out.println(result);
-		if(result==1) {
+		if (result == 1) {
 			return true;
-		}else
+		} else
 			throw new DataBaseException("Exception: Row not deleted");
 	}
-	
-   @Override
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public List<Notes> getAllCollaboratorNotes(User user) {
-		 System.out.println("in notes dao method ");
-		
-			
-			String hql="from Notes where shareTo_userId=:shareTo";
-			Query query = sessionFactory.getCurrentSession().createQuery(hql);
-			query.setParameter("shareTo",user);
-			List noteList = query.list();
-			System.out.println("dao "+noteList.toString()); 
-			
-			
-//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Notes.class).add(Restrictions.eq("userid", user));
-//		List<Notes> noteList = criteria.list();
-//		
-//		System.out.println("notes dao "+noteList);
-		
+		System.out.println("in notes dao method ");
+
+		String hql = "From Notes notes where :user in elements(notes.shareTo)";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("user", user);
+		List noteList = query.list();
+
 		return noteList;
 	}
 

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
-import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.model.UserDTO;
 
 public class NotesDTO {
@@ -28,6 +27,26 @@ public class NotesDTO {
 	
 	private String image;
 	
+	private String userName;
+	
+	private String userEmail;
+		
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 	private Set<UserDTO> shareTo;
 	
 	public Set<UserDTO> getshareTo() {
@@ -80,16 +99,6 @@ public class NotesDTO {
 		this.colour = colour;
 	}
 
-	public NotesDTO() {
-    	
-    }
-//    public NotesDTO(Notes notes) {
-//    	this.title=notes.getTitle();
-//    	this.discription=notes.getDiscription();
-//    	this.archive=notes.getArchive();
-//    	this.trash=notes.getTrash();
-//    	this.pin=notes.isPin();
-//    }
 	
 	public String getTitle() {
 		return title;
@@ -131,12 +140,6 @@ public class NotesDTO {
 		this.pin = pin;
 	}
 
-	@Override
-	public String toString() {
-		return "NotesDTO [noteid=" + noteid + ", title=" + title + ", discription=" + discription + ", archive="
-				+ archive + ", trash=" + trash + ", pin=" + pin + ", colour=" + colour + ", reminder=" + reminder
-				+ ", image=" + image + ", label=" + label + "]";
-	}
-	 
+	
 	
 }

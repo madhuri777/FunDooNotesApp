@@ -73,46 +73,22 @@ public class NotesService implements INotesService {
 		
 		User user=userDao.getUserById(id);
 		
-		System.out.println("qqqq "+user);
-		
 		List<Notes> listNote=notesDAO.getAllNotes(user);
-		
-		List<User> listUser=new ArrayList<User>();
-		
-		System.out.println("get all note "+listNote);
-		
+
 		Set<UserDTO> listOfShareTO=new HashSet<>();
 		
 		
-		List<Notes> listNotes=notesDAO.getAllCollaboratorNotes(user);
+		List<Notes> listOfCollaboratorNotes=notesDAO.getAllCollaboratorNotes(user);
 		
-		System.out.println("collaborator notes "+listNotes);
+		for(Notes note:listOfCollaboratorNotes) {
+			
+			listNote.add(note);
+		}
+       		
+		System.out.println("All together list "+listNote);
 		
-//		
-//		for(Notes note : listNote){
-//			
-//			NotesDTO notesDTO1=new NotesDTO();
-//			notesDTO1.setNoteid(note.getId());
-//			notesDTO1.setTitle(note.getTitle());
-//			notesDTO1.setDiscription(note.getDiscription());
-//			notesDTO1.setArchive(note.getArchive());
-//			notesDTO1.setTrash(note.getTrash());
-//			notesDTO1.setPin(note.isPin());
-//			notesDTO1.setColour(note.getColour());
-//			notesDTO1.setReminder(note.getReminder());
-//			notesDTO1.setLabel(note.getLabel());
-//			notesDTO1.setImage(note.getImage());
-//			
-//			//listUser=(List<User>) note.getShareTo(); getAllUserList()
-//			listOfShareTO=getAllUserList(note.getShareTo());
-//			
-//			notesDTO1.setshareTo(listOfShareTO);
-//			
-//			liNotesDTOs.add(notesDTO1);
-//			
-//		}
 		
-		for(Notes note : listNotes){
+		for(Notes note : listNote){
 			
 			NotesDTO notesDTO1=new NotesDTO();
 			notesDTO1.setNoteid(note.getId());
@@ -125,8 +101,9 @@ public class NotesService implements INotesService {
 			notesDTO1.setReminder(note.getReminder());
 			notesDTO1.setLabel(note.getLabel());
 			notesDTO1.setImage(note.getImage());
+			notesDTO1.setUserName(note.getUserid().getName());
+			notesDTO1.setUserEmail(note.getUserid().getEmail());
 			
-			//listUser=(List<User>) note.getShareTo(); getAllUserList()
 			listOfShareTO=getAllUserList(note.getShareTo());
 			
 			notesDTO1.setshareTo(listOfShareTO);
@@ -140,8 +117,6 @@ public class NotesService implements INotesService {
 	public Set<UserDTO> getAllUserList(Set<User> list){
 		
 		Set<UserDTO> listUser=new HashSet<>();
-		
-		System.out.println("list "+list);
 		
 		for(User usr:list) {
 			
@@ -241,9 +216,6 @@ public class NotesService implements INotesService {
 		
 		if(user!=null) {
 			
-			//listOfUser.add(user);
-			
-			//notes.setShareTo(listOfUser);
 			listOfUser=notes.getShareTo();
 			
 			listOfUser.add(user);
@@ -261,45 +233,45 @@ public class NotesService implements INotesService {
 		
 	}
 	
-	@Override
-	@Transactional
-	public List<NotesDTO> getAllCollaboratorNotes(String token) {
-		
-		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
-		
-		long id=JWT.parseJWT(token);
-		
-		User user=userDao.getUserById(id);
-		
-		List<Notes> listNote=notesDAO.getAllNotes(user);
-		
-		List<User> listUser=new ArrayList<User>();
-		
-		System.out.println("get all note "+listNote);
-		
-		for(Notes note : listNote){
-			
-			NotesDTO notesDTO1=new NotesDTO();
-			notesDTO1.setNoteid(note.getId());
-			notesDTO1.setTitle(note.getTitle());
-			notesDTO1.setDiscription(note.getDiscription());
-			notesDTO1.setArchive(note.getArchive());
-			notesDTO1.setTrash(note.getTrash());
-			notesDTO1.setPin(note.isPin());
-			notesDTO1.setColour(note.getColour());
-			notesDTO1.setReminder(note.getReminder());
-			notesDTO1.setLabel(note.getLabel());
-			notesDTO1.setImage(note.getImage());
-			
-			//listUser=(List<User>) note.getShareTo();
-			
-			
-			//notesDTO1.setshareTo(note.getShareTo());
-			
-			liNotesDTOs.add(notesDTO1);
-			
-		}
-		return  liNotesDTOs;
-	}
+//	@Override
+//	@Transactional
+//	public List<NotesDTO> getAllCollaboratorNotes(String token) {
+//		
+//		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
+//		
+//		long id=JWT.parseJWT(token);
+//		
+//		User user=userDao.getUserById(id);
+//		
+//		List<Notes> listNote=notesDAO.getAllNotes(user);
+//		
+//		List<User> listUser=new ArrayList<User>();
+//		
+//		System.out.println("get all note "+listNote);
+//		
+//		for(Notes note : listNote){
+//			
+//			NotesDTO notesDTO1=new NotesDTO();
+//			notesDTO1.setNoteid(note.getId());
+//			notesDTO1.setTitle(note.getTitle());
+//			notesDTO1.setDiscription(note.getDiscription());
+//			notesDTO1.setArchive(note.getArchive());
+//			notesDTO1.setTrash(note.getTrash());
+//			notesDTO1.setPin(note.isPin());
+//			notesDTO1.setColour(note.getColour());
+//			notesDTO1.setReminder(note.getReminder());
+//			notesDTO1.setLabel(note.getLabel());
+//			notesDTO1.setImage(note.getImage());
+//			
+//			//listUser=(List<User>) note.getShareTo();
+//			
+//			
+//			//notesDTO1.setshareTo(note.getShareTo());
+//			
+//			liNotesDTOs.add(notesDTO1);
+//			
+//		}
+//		return  liNotesDTOs;
+//	}
 
 }

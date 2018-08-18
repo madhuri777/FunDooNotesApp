@@ -5,7 +5,242 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-17T10:20:59Z</updated>
+  <updated>2018-08-17T13:47:29Z</updated>
+  <entry>
+    <title>Spring Session Bean-M1 and Apple-SR4 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/17/spring-session-bean-m1-and-apple-sr4-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Rob Winch</name>
+    </author>
+    <id>tag:spring.io,2018-08-17:3363</id>
+    <updated>2018-08-17T13:47:29Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;em&gt;This post was authored by &lt;a href="https://github.com/vpavic"&gt;Vedran Pavić&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the community I&amp;#8217;m pleased to announce the releases of Spring Session BOM &lt;code&gt;Bean-M1&lt;/code&gt; and &lt;code&gt;Apple-SR4&lt;/code&gt;. Spring Boot users will be happy to learn that these release were picked up in recent &lt;code&gt;2.1.0.M1&lt;/code&gt; and &lt;code&gt;2.0.4.RELEASE&lt;/code&gt; releases of Spring Boot, respectively.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="spring-session-code-bean-m1-code"&gt;&lt;a class="anchor" href="#spring-session-code-bean-m1-code"&gt;&lt;/a&gt;Spring Session &lt;code&gt;Bean-M1&lt;/code&gt;&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;Bean-M1&lt;/code&gt; is first milestone release that is based on Spring Session &lt;code&gt;2.1.0.M1&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The following table provides an overview of all the included modules and their respective versions:&lt;/p&gt;
+&lt;/div&gt;
+&lt;table class="tableblock frame-all grid-all spread"&gt;
+&lt;colgroup&gt;
+&lt;col style="width: 50%;"&gt;
+&lt;col style="width: 50%;"&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="tableblock halign-left valign-top"&gt;Module&lt;/th&gt;
+&lt;th class="tableblock halign-left valign-top"&gt;Version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Core&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.1.0.M1&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data GemFire&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.3.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data Geode&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.3.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data MongoDB&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.2.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data Redis&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.1.0.M1&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Hazelcast&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.1.0.M1&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session JDBC&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.1.0.M1&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="spring-session-code-2-1-0-m1-code"&gt;&lt;a class="anchor" href="#spring-session-code-2-1-0-m1-code"&gt;&lt;/a&gt;Spring Session &lt;code&gt;2.1.0.M1&lt;/code&gt;&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;2.1.0.M1&lt;/code&gt; is the first milestone release in &lt;code&gt;2.1.x&lt;/code&gt; lifecycle. Highlights of this release are support for Same-Site Cookie, which is another mechanism that &lt;a href="https://scotthelme.co.uk/csrf-is-dead/"&gt;helps developers to protect from Cross-Site Request Forgery&lt;/a&gt;, and support for &lt;a href="https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingListener.html"&gt;&lt;code&gt;HttpSessionBindingListener&lt;/code&gt;&lt;/a&gt;. The release also includes the usual dependency upgrades, including picking up Spring Framework &lt;code&gt;5.1.0.RC1&lt;/code&gt; as a baseline. You can find the complete details of the release in the &lt;a href="https://github.com/spring-projects/spring-session/milestone/29?closed=1"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="using-the-bom"&gt;&lt;a class="anchor" href="#using-the-bom"&gt;&lt;/a&gt;Using the BOM&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With Maven:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&amp;lt;dependencyManagement&amp;gt;
+	&amp;lt;dependencies&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;spring-session-bom&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;Bean-M1&amp;lt;/version&amp;gt;
+			&amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;
+			&amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+	&amp;lt;/dependencies&amp;gt;
+&amp;lt;/dependencyManagement&amp;gt;
+&amp;lt;dependencies&amp;gt;
+	&amp;lt;dependency&amp;gt;
+		&amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+		&amp;lt;artifactId&amp;gt;spring-session-data-redis&amp;lt;/artifactId&amp;gt;
+	&amp;lt;/dependency&amp;gt;
+	...
+&amp;lt;/dependencies&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With Gradle:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-gradle" data-lang="gradle"&gt;plugins {
+	id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.session:spring-session-bom:Bean-M1'
+	}
+}
+
+dependencies {
+	compile 'org.springframework.session:spring-session-data-redis'
+	...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="spring-session-code-apple-sr4-code"&gt;&lt;a class="anchor" href="#spring-session-code-apple-sr4-code"&gt;&lt;/a&gt;Spring Session &lt;code&gt;Apple-SR4&lt;/code&gt;&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;Apple-SR4&lt;/code&gt; is a maintenance release includes an update of Spring Session core modules (which include Data Redis, Hazelcast and JDBC) to &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; and Spring Session Data Geode to &lt;code&gt;2.0.3.RELEASE&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The following table provides an overview of all the included modules and their respective versions:&lt;/p&gt;
+&lt;/div&gt;
+&lt;table class="tableblock frame-all grid-all spread"&gt;
+&lt;colgroup&gt;
+&lt;col style="width: 50%;"&gt;
+&lt;col style="width: 50%;"&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th class="tableblock halign-left valign-top"&gt;Module&lt;/th&gt;
+&lt;th class="tableblock halign-left valign-top"&gt;Version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Core&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.5.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data GemFire&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.3.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data Geode&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.3.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data MongoDB&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.2.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Data Redis&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.5.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session Hazelcast&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.5.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;Spring Session JDBC&lt;/p&gt;&lt;/td&gt;
+&lt;td class="tableblock halign-left valign-top"&gt;&lt;p class="tableblock"&gt;&lt;code&gt;2.0.5.RELEASE&lt;/code&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="spring-session-code-2-0-5-release-code"&gt;&lt;a class="anchor" href="#spring-session-code-2-0-5-release-code"&gt;&lt;/a&gt;Spring Session &lt;code&gt;2.0.5.RELEASE&lt;/code&gt;&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; maintenance release contains a couple of bug fixes for reactive Redis session store, improved support for Hazelcast client-server topology as well as dependency upgrades. You can find the complete details of the release in the &lt;a href="https://github.com/spring-projects/spring-session/milestone/38?closed=1"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="using-the-bom-2"&gt;&lt;a class="anchor" href="#using-the-bom-2"&gt;&lt;/a&gt;Using the BOM&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With Maven:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&amp;lt;dependencyManagement&amp;gt;
+	&amp;lt;dependencies&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;spring-session-bom&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;Apple-SR4&amp;lt;/version&amp;gt;
+			&amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;
+			&amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+	&amp;lt;/dependencies&amp;gt;
+&amp;lt;/dependencyManagement&amp;gt;
+&amp;lt;dependencies&amp;gt;
+	&amp;lt;dependency&amp;gt;
+		&amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+		&amp;lt;artifactId&amp;gt;spring-session-data-redis&amp;lt;/artifactId&amp;gt;
+	&amp;lt;/dependency&amp;gt;
+	...
+&amp;lt;/dependencies&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With Gradle:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-gradle" data-lang="gradle"&gt;plugins {
+	id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.session:spring-session-bom:Apple-SR4'
+	}
+}
+
+dependencies {
+	compile 'org.springframework.session:spring-session-data-redis'
+	...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="https://projects.spring.io/spring-session/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-session/docs/2.0.5.RELEASE/reference/html5/"&gt;Documentation&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-session"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-session"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Spring Framework 5.1 RC2 available now</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/17/spring-framework-5-1-rc2-available-now" />
@@ -992,20 +1227,5 @@ When one consumer goes (yields leadership), some other consumer may acquire a lo
 &lt;p&gt;If you haven’t already upgraded to Spring Boot 2, now is a great time to do so as the end of life announcement for 1.x’s &lt;a href="https://spring.io/blog/2018/07/30/spring-boot-1-x-eol-aug-1st-2019"&gt;has just been made&lt;/a&gt;. &lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
 &lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://spring.io/projects/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.5.15.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 1.x EOL Aug 1st 2019</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/07/30/spring-boot-1-x-eol-aug-1st-2019" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Phil Webb</name>
-    </author>
-    <id>tag:spring.io,2018-07-29:3344</id>
-    <updated>2018-07-30T15:19:12Z</updated>
-    <content type="html">&lt;p&gt;All good things must come to an end, and for the 1.x line of Spring Boot that means we will need to cease maintenance twelve months from today, on Aug 1st 2019.&lt;/p&gt;
-&lt;p&gt;We will keep publishing occasional 1.5.x maintenance releases up until that point and will then end the branch.&lt;/p&gt;
-&lt;p&gt;Existing Spring Boot 1.x users should plan accordingly to ensure that they have upgraded to the latest 2.x version before that date. Please also note that Spring Boot 2.0 and above requires Java 8+, so if you&amp;rsquo;re running Java 6 or 7 you should also plan on upgrading your JDK.&lt;/p&gt;
-&lt;p&gt;For detailed instructions on what you&amp;rsquo;ll need to do to upgrade a Spring Boot 1.5 application to 2.0, check out &lt;a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide"&gt;the migration guide&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Good luck!&lt;/p&gt;</content>
   </entry>
 </feed>

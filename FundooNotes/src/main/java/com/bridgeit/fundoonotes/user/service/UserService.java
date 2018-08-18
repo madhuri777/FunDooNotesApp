@@ -1,5 +1,10 @@
 package com.bridgeit.fundoonotes.user.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -10,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bridgeit.fundoonotes.notes.service.INotesService;
+import com.bridgeit.fundoonotes.notes.service.NotesService;
 import com.bridgeit.fundoonotes.user.configuration.FundooNotesConfiguration;
 import com.bridgeit.fundoonotes.user.dao.IUserDao;
 import com.bridgeit.fundoonotes.user.dao.TokenUtil;
@@ -19,12 +26,16 @@ import com.bridgeit.fundoonotes.user.model.EmailTocken;
 import com.bridgeit.fundoonotes.user.model.LoginDTO;
 import com.bridgeit.fundoonotes.user.model.RegistrationDTO;
 import com.bridgeit.fundoonotes.user.model.User;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 import com.bridgeit.fundoonotes.user.utility.JWT;
 
 @Service
 public class UserService implements IUserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
+	@Autowired
+	private INotesService iNotesService;
 
 	@Autowired
 	private IUserDao userDao;
@@ -41,7 +52,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public boolean register(RegistrationDTO registeruser, String url)throws DataBaseException {
+	public boolean register(RegistrationDTO registeruser, String url) throws DataBaseException {
 
 		String pw_hash = BCrypt.hashpw(registeruser.getPassword(), BCrypt.gensalt());
 
@@ -72,10 +83,10 @@ public class UserService implements IUserService {
 			tokenUtil.setToken(id + "", tocken);
 
 			return true;
-		}else
-			
-		throw new DataBaseException("Email Already Exist");
-		
+		} else
+
+			throw new DataBaseException("Email Already Exist");
+
 	}
 
 	@Override
@@ -93,9 +104,9 @@ public class UserService implements IUserService {
 			token = JWT.createJWT(String.valueOf(id), 86400000);
 
 			return token;
-		} 
-//		else
-//			throw new LoginException("User Not Found"); // return null;
+		}
+		// else
+		// throw new LoginException("User Not Found"); // return null;
 		return null;
 	}
 
@@ -124,7 +135,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public boolean forgetPassWord(String email, String url)throws LoginException {
+	public boolean forgetPassWord(String email, String url) throws LoginException {
 
 		User user = userDao.isExist(email);
 
@@ -146,8 +157,8 @@ public class UserService implements IUserService {
 			tokenUtil.setToken(String.valueOf(id), token);
 
 			return true;
-		}else
-			
+		} else
+
 			throw new LoginException("Not Verified User");
 
 	}
@@ -178,18 +189,45 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public boolean changePassWord(String token,HttpServletResponse res) throws Exception {
+	public boolean changePassWord(String token, HttpServletResponse res) throws Exception {
 		long id = JWT.parseJWT(token);
 
 		String redistoken = tokenUtil.getToken(String.valueOf(id));
-		
-		if(token.equals(redistoken)) {
-			
+
+		if (token.equals(redistoken)) {
+
 			System.out.println("send redisrect method");
-			res.sendRedirect("http://127.0.0.1:8081/#!/resetPassword?token="+token);
+			res.sendRedirect("http://127.0.0.1:8081/#!/resetPassword?token=" + token);
 			return true;
 		}
 		return false;
+	}
+
+	@Transactional
+	@Override
+	public List<UserDTO> getAllUsers() {
+
+		List<UserDTO> listOfUsersdto = new ArrayList<UserDTO>();
+
+		List<User> listOfUsers = userDao.getAllUsers();
+
+		for (User usr : listOfUsers) {
+
+			UserDTO dto = new UserDTO();
+
+			dto.setEmailId(usr.getEmail());
+			dto.setUserId(usr.getUserId());
+			dto.setUsername(usr.getName());
+            
+			listOfUsersdto.add(dto);
+
+		}
+
+		// listOfUsersdto=iNotesService.getAllUserList(listOfUsers);
+
+		System.out.println("user service " + listOfUsersdto);
+
+		return listOfUsersdto;
 	}
 
 }

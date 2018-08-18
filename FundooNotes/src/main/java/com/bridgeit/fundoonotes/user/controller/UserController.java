@@ -1,5 +1,7 @@
 package com.bridgeit.fundoonotes.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import com.bridgeit.fundoonotes.user.model.ForgetPassWordDTO;
 import com.bridgeit.fundoonotes.user.model.LoginDTO;
 import com.bridgeit.fundoonotes.user.model.RegistrationDTO;
 import com.bridgeit.fundoonotes.user.model.Response;
+import com.bridgeit.fundoonotes.user.model.UserDTO;
 import com.bridgeit.fundoonotes.user.service.IUserService;
 
 
@@ -123,5 +126,11 @@ public class UserController {
 			res.setMessage("Can't ResetPassWord");
 		return new ResponseEntity<Response>(res, HttpStatus.CONFLICT);
 	}
+	}
+	
+	@RequestMapping(value="/getAllUsers",method=RequestMethod.GET)
+	public ResponseEntity<?> getAllUsers(){
+		List<UserDTO> listOfuser=userService.getAllUsers();
+		return new ResponseEntity<>(listOfuser,HttpStatus.OK);
 	}
 }
