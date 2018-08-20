@@ -18,5 +18,5 @@ public interface IUserService {
 	boolean forgetPassWord(String email,String url);
 	boolean resetPassWord(String tocken,String newPassWd);
 	boolean changePassWord(String token,HttpServletResponse res) throws Exception;
-	List<UserDTO> getAllUsers();
+	List<UserDTO> getAllUsers(String token);
 }

@@ -129,8 +129,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/getAllUsers",method=RequestMethod.GET)
-	public ResponseEntity<?> getAllUsers(){
-		List<UserDTO> listOfuser=userService.getAllUsers();
+	public ResponseEntity<?> getAllUsers(HttpServletRequest request){
+		
+		String token=request.getHeader("userid");
+		System.out.println("token of user "+token);
+		List<UserDTO> listOfuser=userService.getAllUsers(token);
 		return new ResponseEntity<>(listOfuser,HttpStatus.OK);
 	}
 }

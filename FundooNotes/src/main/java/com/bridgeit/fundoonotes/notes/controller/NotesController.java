@@ -137,4 +137,9 @@ public class NotesController {
 		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
 	}
 	
+	@RequestMapping(value="removecollaborator")
+	public ResponseEntity<?> removeCollaborator(){
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }

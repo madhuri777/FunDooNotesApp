@@ -205,25 +205,27 @@ public class UserService implements IUserService {
 
 	@Transactional
 	@Override
-	public List<UserDTO> getAllUsers() {
+	public List<UserDTO> getAllUsers(String token) {
+		
+		long userid=JWT.parseJWT(token);
 
 		List<UserDTO> listOfUsersdto = new ArrayList<UserDTO>();
 
 		List<User> listOfUsers = userDao.getAllUsers();
 
 		for (User usr : listOfUsers) {
+			
+			if(usr.getUserId()!=userid) {
+				
+				UserDTO dto = new UserDTO();
 
-			UserDTO dto = new UserDTO();
-
-			dto.setEmailId(usr.getEmail());
-			dto.setUserId(usr.getUserId());
-			dto.setUsername(usr.getName());
-            
-			listOfUsersdto.add(dto);
-
+				dto.setEmailId(usr.getEmail());
+				dto.setUserId(usr.getUserId());
+				dto.setUsername(usr.getName());
+	            
+				listOfUsersdto.add(dto);
+			}
 		}
-
-		// listOfUsersdto=iNotesService.getAllUserList(listOfUsers);
 
 		System.out.println("user service " + listOfUsersdto);
 
