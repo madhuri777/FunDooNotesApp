@@ -233,45 +233,36 @@ public class NotesService implements INotesService {
 		
 	}
 	
-//	@Override
-//	@Transactional
-//	public List<NotesDTO> getAllCollaboratorNotes(String token) {
-//		
-//		List<NotesDTO> liNotesDTOs=new ArrayList<NotesDTO>();
-//		
-//		long id=JWT.parseJWT(token);
-//		
-//		User user=userDao.getUserById(id);
-//		
-//		List<Notes> listNote=notesDAO.getAllNotes(user);
-//		
-//		List<User> listUser=new ArrayList<User>();
-//		
-//		System.out.println("get all note "+listNote);
-//		
-//		for(Notes note : listNote){
-//			
-//			NotesDTO notesDTO1=new NotesDTO();
-//			notesDTO1.setNoteid(note.getId());
-//			notesDTO1.setTitle(note.getTitle());
-//			notesDTO1.setDiscription(note.getDiscription());
-//			notesDTO1.setArchive(note.getArchive());
-//			notesDTO1.setTrash(note.getTrash());
-//			notesDTO1.setPin(note.isPin());
-//			notesDTO1.setColour(note.getColour());
-//			notesDTO1.setReminder(note.getReminder());
-//			notesDTO1.setLabel(note.getLabel());
-//			notesDTO1.setImage(note.getImage());
-//			
-//			//listUser=(List<User>) note.getShareTo();
-//			
-//			
-//			//notesDTO1.setshareTo(note.getShareTo());
-//			
-//			liNotesDTOs.add(notesDTO1);
-//			
-//		}
-//		return  liNotesDTOs;
-//	}
+	@Override
+	@Transactional
+	public void removeCollaborator(long userId,NotesDTO dto) {
+		
+	// Set<User> listOfCOllaborator=new HashSet<User>();
+		
+     long noteId=dto.getNoteid();
+     
+     Notes note=notesDAO.getNoteById(noteId);
+     
+     Set<User> listOfCOllaborator=note.getShareTo();
+     
+     for(User user:listOfCOllaborator) {
+    	 
+    	 if(user.getUserId()==userId) {
+    		 
+    		 listOfCOllaborator.remove(user);
+    		
+    		 System.out.println("removed the user "); 
+    		 
+    	 }
+    	 
+    	 
+     }
+//     note.setShareTo(listOfCOllaborator);
+//     notesDAO.update(note);
+     
+     System.out.println("user list "+listOfCOllaborator.toString()); 
+     
+		
+	}
 
 }

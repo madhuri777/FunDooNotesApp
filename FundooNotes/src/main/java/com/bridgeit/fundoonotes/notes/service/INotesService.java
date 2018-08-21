@@ -18,4 +18,5 @@ public interface INotesService {
 	Resource loadFile(String fileName);
 	boolean collaborator(String email,NotesDTO dto);
 	Set<UserDTO> getAllUserList(Set<User> list);
+	void removeCollaborator(long userId,NotesDTO dto);
 }

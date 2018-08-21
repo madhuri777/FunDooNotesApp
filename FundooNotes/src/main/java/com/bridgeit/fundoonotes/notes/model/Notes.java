@@ -28,6 +28,7 @@ public class Notes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User userid;
 

@@ -86,6 +86,32 @@ public class NotesController {
 		return new ResponseEntity<String>("this id's note not present ",HttpStatus.CONFLICT);
 	}
 	
+	@RequestMapping(value="addcollaborator/{useremail:.+}",method=RequestMethod.POST)
+	public ResponseEntity<?> collaborator(@PathVariable String useremail,@RequestBody NotesDTO dto, HttpServletRequest request){
+		
+		System.out.println("email for collaborator "+useremail);
+		boolean flag=iNotesService.collaborator(useremail,dto);
+		
+		Response response=new Response();
+		
+		if(flag) {
+			response.setMessage("succesfully collaborated");
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		response.setMessage("Not set collaboratedc succsfully ");
+		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+	}
+	
+
+	@RequestMapping(value="removecollaborator/{userId}",method=RequestMethod.POST)
+	public ResponseEntity<?> removeCollaborator(@PathVariable long userId,@RequestBody NotesDTO dto,Response response ){
+		iNotesService.removeCollaborator(userId,dto);
+		response.setMessage("deleted collaborator successfully");
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	
+	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
     public ResponseEntity<?> handleFileUpload( 
             @RequestParam("file") MultipartFile file){
@@ -121,25 +147,6 @@ public class NotesController {
 				.body(file);
 	}
 	
-	@RequestMapping(value="addcollaborator/{useremail:.+}",method=RequestMethod.POST)
-	public ResponseEntity<?> collaborator(@PathVariable String useremail,@RequestBody NotesDTO dto, HttpServletRequest request){
-		
-		System.out.println("email for collaborator "+useremail);
-		boolean flag=iNotesService.collaborator(useremail,dto);
-		
-		Response response=new Response();
-		
-		if(flag) {
-			response.setMessage("succesfully collaborated");
-			return new ResponseEntity<>(response,HttpStatus.OK);
-		}
-		response.setMessage("Not set collaboratedc succsfully ");
-		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
-	}
-	
-	@RequestMapping(value="removecollaborator")
-	public ResponseEntity<?> removeCollaborator(){
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+
 	
 }

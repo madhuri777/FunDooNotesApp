@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="label")
@@ -29,11 +31,11 @@ public class Labels {
 	@Column
 	private String labelName;
 	
-	
+	@JsonIgnore
 	@ManyToMany(mappedBy="label",fetch = FetchType.EAGER)
 	private Set<Notes> note=new HashSet<Notes>();
 	
-	@JsonIgnore
+	@JsonProperty(access=Access.WRITE_ONLY)
 	@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	private User userid;
 	
@@ -62,11 +64,6 @@ public class Labels {
 	public void setNote(Set<Notes> note) {
 		this.note = note;
 	}
-//	@Override
-//	public String toString() {
-//		return "Labels [labelId=" + labelId + ", labelName=" + labelName + ", note=" + note + ", userid=" + userid
-//				+ "]";
-//	}
-//	
+
 	
 }
