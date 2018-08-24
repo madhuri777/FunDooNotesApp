@@ -4,6 +4,14 @@ public class Response {
 
 	private String token;
 	private String message;
+	private UserDTO userdto;
+	
+	public UserDTO getUserdto() {
+		return userdto;
+	}
+	public void setUserdto(UserDTO userdto) {
+		this.userdto = userdto;
+	}
 	public String getToken() {
 		return token;
 	}

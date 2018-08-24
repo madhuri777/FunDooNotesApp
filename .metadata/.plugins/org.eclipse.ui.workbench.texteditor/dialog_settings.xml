@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="jax"/>
 			<item value="file-upload"/>
 			<item value="jackson"/>
 			<item value="&lt;dependency&gt;"/>

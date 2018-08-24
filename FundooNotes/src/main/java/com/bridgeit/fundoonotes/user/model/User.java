@@ -33,8 +33,17 @@ public class User {
 
 	private boolean isVerified=false;
 	
+	private String profile;
 	
 	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	public boolean isVerified() {
 		return isVerified;
 	}

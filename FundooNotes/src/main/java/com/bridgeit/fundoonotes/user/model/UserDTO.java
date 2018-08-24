@@ -7,6 +7,30 @@ public class UserDTO {
 	private String username;
 	
 	private String emailId;
+	
+	private String profile;
+	
+
+	//default constructore
+	public UserDTO() {
+		
+	}
+	
+	//Parameterize constructor
+	public UserDTO(User user) {
+		this.userId=user.getUserId();
+		this.username=user.getName();
+		this.emailId=user.getEmail();
+		this.profile=user.getProfile();
+	}
+	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 
 	public long getUserId() {
 		return userId;

@@ -142,6 +142,7 @@ public class NotesController {
 	public ResponseEntity<?> getFileImage(@PathVariable String filename,HttpServletRequest request){
 		System.out.println("image name "+filename);
 		Resource file = iNotesService.loadFile(filename);
+		System.out.println("abcdefg "+file);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);

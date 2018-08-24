@@ -51,17 +51,16 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody LoginDTO loginuser, HttpServletResponse response,Response res) {
+	public ResponseEntity<?> login(@RequestBody LoginDTO loginuser, HttpServletResponse response,Response response2) {
       
-		String token=userService.login(loginuser);
-		if(token!=null) {
-             res.setToken(token);
-             res.setMessage("Login Successfully ");
-			return new ResponseEntity<Response>(res, HttpStatus.OK);
+		 response2=userService.login(loginuser);
+		if(response2.getUserdto()!=null) {
+			response2.setMessage("User logged successfully");
+			return new ResponseEntity<Response>(response2, HttpStatus.OK);
 		
 		}else {
-			res.setMessage("User Not Found Or User Not Activated");
-			return new ResponseEntity<Response>(res,HttpStatus.CONFLICT);
+			response2.setMessage("User Not Found Or User Not Activated");
+			return new ResponseEntity<Response>(response2,HttpStatus.CONFLICT);
 		}
 		}
 
@@ -136,4 +135,14 @@ public class UserController {
 		List<UserDTO> listOfuser=userService.getAllUsers(token);
 		return new ResponseEntity<>(listOfuser,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/upadteuserprofile",method=RequestMethod.POST)
+	public ResponseEntity<?> upadteUserProfile(@RequestBody UserDTO dto,Response response){
+		
+		UserDTO dto2=userService.updateUserProfile(dto);
+		response.setMessage("successfully");
+		response.setUserdto(dto2);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
 }

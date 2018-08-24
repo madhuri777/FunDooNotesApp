@@ -25,6 +25,7 @@ import com.bridgeit.fundoonotes.user.exception.LoginException;
 import com.bridgeit.fundoonotes.user.model.EmailTocken;
 import com.bridgeit.fundoonotes.user.model.LoginDTO;
 import com.bridgeit.fundoonotes.user.model.RegistrationDTO;
+import com.bridgeit.fundoonotes.user.model.Response;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.model.UserDTO;
 import com.bridgeit.fundoonotes.user.utility.JWT;
@@ -91,8 +92,9 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public String login(LoginDTO loginuser) throws LoginException {
-
+	public Response login(LoginDTO loginuser) throws LoginException {
+ 
+		Response response=new Response();
 		String token;
 
 		User user2 = userDao.isExist(loginuser.getEmail());
@@ -102,12 +104,17 @@ public class UserService implements IUserService {
 
 			long id = user2.getUserId();
 			token = JWT.createJWT(String.valueOf(id), 86400000);
-
-			return token;
+ 
+			response.setToken(token);
+			
+			UserDTO userdto=new UserDTO(user2);
+			
+			response.setUserdto(userdto);
+			
+			return response;
 		}
-		// else
-		// throw new LoginException("User Not Found"); // return null;
-		return null;
+		
+		return response;
 	}
 
 	@Override
@@ -217,11 +224,11 @@ public class UserService implements IUserService {
 			
 			if(usr.getUserId()!=userid) {
 				
-				UserDTO dto = new UserDTO();
-
-				dto.setEmailId(usr.getEmail());
-				dto.setUserId(usr.getUserId());
-				dto.setUsername(usr.getName());
+				UserDTO dto = new UserDTO(usr);
+//
+//				dto.setEmailId(usr.getEmail());
+//				dto.setUserId(usr.getUserId());
+//				dto.setUsername(usr.getName());
 	            
 				listOfUsersdto.add(dto);
 			}
@@ -230,6 +237,24 @@ public class UserService implements IUserService {
 		System.out.println("user service " + listOfUsersdto);
 
 		return listOfUsersdto;
+	}
+
+	@Transactional
+	@Override
+	public UserDTO updateUserProfile(UserDTO dto) {
+		
+		long userId=dto.getUserId();
+		
+		User user=userDao.getUserById(userId);
+		
+		user.setProfile(dto.getProfile());
+		
+		userDao.update(user);
+		
+		UserDTO dto2=new UserDTO(user);
+		
+		System.out.println( "update successfully");
+		return dto2;
 	}
 
 }
