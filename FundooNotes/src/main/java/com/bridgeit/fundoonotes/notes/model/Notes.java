@@ -1,19 +1,26 @@
 package com.bridgeit.fundoonotes.notes.model;
 
+import java.util.ArrayList;
 //import java.sql.Date;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
@@ -40,6 +47,14 @@ public class Notes {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<User> shareTo = new HashSet<User>();
 
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="note")
+//	@JoinTable
+//	  (
+//	      joinColumns={ @JoinColumn(name="Notes_id", referencedColumnName="id") },
+//	      inverseJoinColumns={ @JoinColumn(name="url_id", referencedColumnName="linkId", unique=true) }
+//	  )
+	private List<WebScrapping> url = new ArrayList<WebScrapping>();; 
+	
 	@Column
 	private Date createdDate;
 
@@ -70,6 +85,7 @@ public class Notes {
 	@Column
 	private String image;
 
+	
 	public Notes() {
 
 	}
@@ -86,6 +102,15 @@ public class Notes {
 		this.colour = dto.getColour();
 		this.label = dto.getLabel();
 		this.image = dto.getImage();
+	}
+
+
+	public List<WebScrapping> getUrl() {
+		return url;
+	}
+
+	public void setUrl(List<WebScrapping> url) {
+		this.url = url;
 	}
 
 	public Set<User> getShareTo() {

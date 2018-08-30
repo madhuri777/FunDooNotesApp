@@ -44,6 +44,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.bridgeit.fundoonotes.labels.model.Labels;
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.notes.model.WebScrapping;
 import com.bridgeit.fundoonotes.user.model.EmailTocken;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.utility.MailRabbitMQ;
@@ -89,7 +90,7 @@ public class FundooNotesConfiguration {
 
 		sessionFactoryBean.setDataSource(dataSource());
 		sessionFactoryBean.setHibernateProperties(properties);
-		sessionFactoryBean.setAnnotatedClasses(User.class,Notes.class,Labels.class);
+		sessionFactoryBean.setAnnotatedClasses(User.class,Notes.class,Labels.class,WebScrapping.class);
 		return sessionFactoryBean;
 
 	}
@@ -230,7 +231,7 @@ public class FundooNotesConfiguration {
    @Bean(name = "multipartResolver")
    public CommonsMultipartResolver multipartResolver() {
        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-       multipartResolver.setMaxUploadSize(200000);
+       multipartResolver.setMaxUploadSize(2000000);
        return multipartResolver;
    }
 }

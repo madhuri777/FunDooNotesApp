@@ -3,10 +3,19 @@ package com.bridgeit.fundoonotes.notes.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -117,13 +126,14 @@ public class NotesController {
             @RequestParam("file") MultipartFile file){
 		Response response=new Response();
 		String filename=file.getOriginalFilename();
+		System.out.println("file file file file fiele");
 		System.out.println("file name "+filename);
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 
                 BufferedOutputStream stream = 
-                        new BufferedOutputStream(new FileOutputStream(new File("/home/bridgeit/eclipse-workspace-FundoApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/"+filename )));
+                        new BufferedOutputStream(new FileOutputStream(new File("/home/bridgeit/workspace/FunDooNotesApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/"+filename )));
                 stream.write(bytes);
                 stream.close();
                 response.setMessage("http://localhost:8080/FundooNotes/image/"+ filename);
@@ -148,6 +158,43 @@ public class NotesController {
 				.body(file);
 	}
 	
+	@RequestMapping(value="webscrapping",method=RequestMethod.POST)
+	public ResponseEntity<?> webScrapping(@RequestBody String url){
+		System.out.println("aaaaa "+url);
+		ArrayList<String> links = new ArrayList<String>();
+		 
+		String regex = "\\(?\\b(https://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(url);
+		while(m.find()) {
+		String urlStr = m.group();
+		if (urlStr.startsWith("(") && urlStr.endsWith(")"))
+		{
+		urlStr = urlStr.substring(1, urlStr.length() - 1);
+		}
+		links.add(urlStr);
+		}
+		System.out.println("links array "+links);
+		for(String s:links){
+			System.out.println("iterator "+s);
+			URL url2;
+					try {
+						url2 = new URL(s);
+						String host=url2.getHost();
+						System.out.println("host name "+host);
+						Document doc = Jsoup.connect(s).get();
+						String title=doc.title();
+						System.out.println("title "+title);
+						Element productLink = doc.select("a").first();
+						String href = productLink.attr("abs:href");
+						System.out.println("images "+href);
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		}
+		return new ResponseEntity<>(links,HttpStatus.CONFLICT);
 
-	
+	}
 }

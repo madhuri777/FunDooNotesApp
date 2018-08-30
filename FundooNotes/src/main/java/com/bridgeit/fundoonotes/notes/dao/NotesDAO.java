@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.fundoonotes.notes.model.Notes;
+import com.bridgeit.fundoonotes.notes.model.WebScrapping;
 import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
 
@@ -28,6 +29,12 @@ public class NotesDAO implements INotesDAO {
 		return noteId;
 	}
 
+	@Override
+	public long saveWeb(WebScrapping web){
+		Session session=sessionFactory.openSession();
+		long linkId = (Long) session.save(web);
+		return linkId;
+	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Notes> getAllNotes(User user) {

@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.core.io.Resource;
 
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.notes.model.WebScrapping;
 import com.bridgeit.fundoonotes.user.model.User;
 import com.bridgeit.fundoonotes.user.model.UserDTO;
 
@@ -19,4 +20,5 @@ public interface INotesService {
 	boolean collaborator(String email,NotesDTO dto);
 	Set<UserDTO> getAllUserList(Set<User> list);
 	void removeCollaborator(long userId,NotesDTO dto);
+	List<WebScrapping> webScrap(String url,long noteid);
 }

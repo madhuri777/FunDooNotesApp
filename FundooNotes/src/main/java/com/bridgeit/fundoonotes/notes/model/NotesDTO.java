@@ -1,7 +1,9 @@
 package com.bridgeit.fundoonotes.notes.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.bridgeit.fundoonotes.labels.model.Labels;
@@ -30,7 +32,38 @@ public class NotesDTO {
 	private String userName;
 	
 	private String userEmail;
-		
+	
+	private Date modifiedDate;
+	
+	private String profile;
+	
+	private List<WebScrapping> links = new ArrayList<>();
+	
+
+	public List<WebScrapping> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<WebScrapping> links) {
+		this.links = links;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

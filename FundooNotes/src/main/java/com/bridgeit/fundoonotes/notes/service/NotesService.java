@@ -1,6 +1,8 @@
 package com.bridgeit.fundoonotes.notes.service;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -8,16 +10,23 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.fundoonotes.notes.dao.NotesDAO;
 import com.bridgeit.fundoonotes.notes.model.Notes;
 import com.bridgeit.fundoonotes.notes.model.NotesDTO;
+import com.bridgeit.fundoonotes.notes.model.WebScrapping;
 import com.bridgeit.fundoonotes.user.dao.UserDao;
 import com.bridgeit.fundoonotes.user.exception.DataBaseException;
 import com.bridgeit.fundoonotes.user.model.User;
@@ -27,7 +36,7 @@ import com.bridgeit.fundoonotes.user.utility.JWT;
 @Service
 public class NotesService implements INotesService {
 
-	private final Path rootLocation = Paths.get("/home/bridgeit/eclipse-workspace-FundoApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/");
+	private final Path rootLocation = Paths.get("/home/bridgeit/workspace/FunDooNotesApp/FundooNotes/src/main/java/com/bridgeit/fundoonotes/Profile/");
 	
 	
 	@Autowired
@@ -40,17 +49,29 @@ public class NotesService implements INotesService {
 	NotesDAO notesDAO;
 	
 	@Override
-	@Transactional
+	@Transactional(propagation=Propagation.NESTED)
 	public NotesDTO createNotes(String tocken,NotesDTO dto) {
 		
 		long id=JWT.parseJWT(tocken);
 		
 		User user=userDao.getUserById(id);
 		
+		String url=dto.getDiscription();
+		long noteid2=dto.getNoteid();
+		
 		Notes note=new Notes(dto);
 		note.setUserid(user);
+		//note.setUrl(listOfLinks);
 		
 		long noteid=notesDAO.save(note);
+		List<WebScrapping> listOfLinks=webScrap(url,noteid);
+		
+//		for(WebScrapping u:listOfLinks){
+//			//System.out.println(u.getLinkId());
+//			System.out.println("qazqazqazqazqazqazqazqazazaz "+u.toString()); 
+//			
+//		}
+		
 		
 		note=notesDAO.getNoteById(noteid);
 		
@@ -60,9 +81,59 @@ public class NotesService implements INotesService {
 		noteDTO.setPin(note.isPin());
 		noteDTO.setTrash(note.getTrash());
 	    noteDTO.setColour(note.getColour());
+	    noteDTO.setLinks(note.getUrl());
+	    
 		return noteDTO;
 	}
 
+	@Override
+	@Transactional
+	public List<WebScrapping> webScrap(String url,long noteid){
+		//System.out.println("aaaaa "+url);
+		ArrayList<String> links = new ArrayList<String>();
+		Notes notes=new Notes();
+		notes.setId(noteid);
+		List<WebScrapping> listOfwebs=new ArrayList<WebScrapping>();
+		 
+		String regex = "\\(?\\b(https://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(url);
+		while(m.find()) {
+		String urlStr = m.group();
+		if (urlStr.startsWith("(") && urlStr.endsWith(")"))
+		{
+		urlStr = urlStr.substring(1, urlStr.length() - 1);
+		}
+		links.add(urlStr);
+		}
+//		System.out.println("links array "+links);
+		for(String s:links){
+//			System.out.println("iterator "+s);
+			URL url2;
+			WebScrapping web=new WebScrapping();
+					try {
+						url2 = new URL(s);
+						String host=url2.getHost();
+						web.setDescription(host);
+						Document doc = Jsoup.connect(s).get();
+						String title=doc.title();
+						web.setTitle(title);
+						Element productLink = doc.select("a").first();
+						String href = productLink.attr("abs:href");
+						web.setImage(href);
+					   web.setNote(notes);
+						notesDAO.saveWeb(web);
+						listOfwebs.add(web);
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+		}
+		return listOfwebs;
+	}
+	
+	
+	
 	@Override
 	@Transactional
 	public List<NotesDTO> getAllNotes(String token) {
@@ -84,8 +155,6 @@ public class NotesService implements INotesService {
 			
 			listNote.add(note);
 		}
-       		
-		System.out.println("All together list "+listNote);
 		
 		
 		for(Notes note : listNote){
@@ -103,6 +172,9 @@ public class NotesService implements INotesService {
 			notesDTO1.setImage(note.getImage());
 			notesDTO1.setUserName(note.getUserid().getName());
 			notesDTO1.setUserEmail(note.getUserid().getEmail());
+			notesDTO1.setModifiedDate(note.getModifiedDate());
+			notesDTO1.setProfile(note.getUserid().getProfile());
+			notesDTO1.setLinks(note.getUrl());
 			
 			listOfShareTO=getAllUserList(note.getShareTo());
 			
@@ -125,6 +197,7 @@ public class NotesService implements INotesService {
 			dto.setEmailId(usr.getEmail());
 			dto.setUserId(usr.getUserId());
 			dto.setUsername(usr.getName());
+			dto.setProfile(usr.getProfile());
 			
 			listUser.add(dto);
 			
@@ -161,8 +234,6 @@ public class NotesService implements INotesService {
             note.setImage(dto.getImage());
             
             notesDAO.update(note);
-            
-            System.out.println("upadted note "+note);
 			
 			return true;
 		}
@@ -223,8 +294,6 @@ public class NotesService implements INotesService {
 			notes.setShareTo(listOfUser);
 			status=notesDAO.update(notes);
 			
-			System.out.println("value of status "+status );
-			
 			return status;
 		}
 		
@@ -251,7 +320,7 @@ public class NotesService implements INotesService {
     		 
     		 listOfCOllaborator.remove(user);
     		
-    		 System.out.println("removed the user "); 
+    		// System.out.println("removed the user "); 
     		 
     	 }
     	 
@@ -260,7 +329,7 @@ public class NotesService implements INotesService {
 //     note.setShareTo(listOfCOllaborator);
 //     notesDAO.update(note);
      
-     System.out.println("user list "+listOfCOllaborator.toString()); 
+     //System.out.println("user list "+listOfCOllaborator.toString()); 
      
 		
 	}
