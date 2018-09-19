@@ -48,7 +48,7 @@ public class MailRabbitMQ {
 		 public static void reciever(EmailTocken message) {
 			 
 		    final String fromEmail = "satkarmadhuri777@gmail.com"; //requires valid gmail id
-			final String password = "**satkar**"; // correct password for gmail id
+			final String password = ""; // correct password for gmail id
 			
 			System.out.println("SSLEmail Start");
 			Properties props = new Properties();
